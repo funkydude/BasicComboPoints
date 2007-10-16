@@ -1,0 +1,8 @@
+﻿## Interface: 20200
+## Title: BasicComboPoints
+## Notes: Numerical display of current combo points
+## Author: Funkydude
+## X-Category: Combat
+## Version: 1.0
+
+BasicComboPoints.lua
