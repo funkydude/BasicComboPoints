@@ -3,6 +3,7 @@
 ## Notes: Numerical display of current combo points
 ## Author: Funkydude
 ## X-Category: Combat
+## X-Website: http://wowace.com/wiki/BasicComboPoints
 ## Version: 1.0
 
 BasicComboPoints.lua
