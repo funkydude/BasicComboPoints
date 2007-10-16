@@ -13,7 +13,8 @@ local display = CreateFrame("Frame", "BCP", UIParent)
 display:SetFrameStrata("BACKGROUND")
 display:SetWidth(30)
 display:SetHeight(30)
-display:SetPoint("CENTER", UIParent, "CENTER", 400, -400)
+display:SetPoint("RIGHT", TargetFrame, "RIGHT")
+display:SetParent(TargetFrame)
 display:Show()
 
 --------------------------------------------------
