@@ -28,8 +28,7 @@ display:Show()
 
 local text = display:CreateFontString(nil,"OVERLAY")
 text:SetPoint("CENTER", display, "CENTER")
-text:SetShadowOffset(.8, -.8)
-text:SetShadowColor(0, 0, 0, 1)
+local font = "Fonts\\FRIZQT__.TTF"
 
 --------------------------------------------------
 -------------------EVENT REGISTER-----------------
@@ -64,16 +63,16 @@ end
 
 --Update point colour and size
 if points == 0 or points == 1 then
-	text:SetFont("Fonts\\FRIZQT__.TTF", 18)
+	text:SetFont(font, 18)
 	text:SetTextColor(1, 1, 1)
 elseif points == 2 or points == 3 then
-	text:SetFont("Fonts\\FRIZQT__.TTF", 22)
+	text:SetFont(font, 22)
 	text:SetTextColor(0, 1, 0)
 elseif points == 4 then
-	text:SetFont("Fonts\\FRIZQT__.TTF", 27)
+	text:SetFont(font, 27)
 	text:SetTextColor(0, 0, 1)
 else
-	text:SetFont("Fonts\\FRIZQT__.TTF", 35)
+	text:SetFont(font, 35)
 	text:SetTextColor(1, 0, 0)
 end
 
