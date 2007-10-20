@@ -61,8 +61,11 @@ if not start then
 	IsAddOnLoaded = nil
 end
 
+--remove the following line when testing new frame locations for ease
+if points == 0 then return end --we don't want to display if we have 0 points
+
 --Update point colour and size
-if points == 0 or points == 1 then
+if points == 1 then
 	text:SetFont(font, 18)
 	text:SetTextColor(1, 1, 1)
 elseif points == 2 or points == 3 then
