@@ -2,7 +2,10 @@
 ----------------BASIC COMBO POINTS----------------
 --------------------------------------------------
 
-if select(2, UnitClass('player')) ~= "ROGUE" then
+local class = select(2, UnitClass("player"))
+if class == "ROGUE" or class == "DRUID" then
+	class = nil
+else
 	DisableAddOn("BasicComboPoints")
 	return
 end
@@ -64,8 +67,7 @@ end
 --Update point colour and size
 if points == 0 then
 	text:SetFont(font, 18) 
-	text:SetText("") --remove this line below when testing new frame locations for ease, we don't want to display if we have 0 points
-	return --remove when frame testing
+	points = "" --remove this line when testing new frame locations for ease, we don't want to display if we have 0 points
 elseif points == 1 then
 	text:SetFont(font, 18)
 	text:SetTextColor(1, 1, 1)
