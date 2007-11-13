@@ -1,4 +1,4 @@
-﻿## Interface: 20200
+﻿## Interface: 20300
 ## Title: BasicComboPoints
 ## Notes: Numerical display of current combo points
 ## Author: Funkydude
