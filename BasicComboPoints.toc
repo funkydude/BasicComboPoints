@@ -4,6 +4,11 @@
 ## Author: Funkydude
 ## X-Category: Combat
 ## X-Website: http://wowace.com/wiki/BasicComboPoints
-## Version: 1.0
+## Version: 2.0
+## SavedVariables: BasicComboPointsDB
+## OptionalDeps: Ace3
+## X-Embeds: Ace3
+
+embeds.xml
 
 BasicComboPoints.lua
