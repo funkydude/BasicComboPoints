@@ -11,7 +11,6 @@ else
 end
 
 local points = GetComboPoints
-local _G = _G
 local display = nil
 local text = nil
 local font = nil
@@ -25,7 +24,76 @@ local defaults = {
 	}
 }
 
-local BasicComboPoints = LibStub("AceAddon-3.0"):NewAddon("BasicComboPoints", "AceEvent-3.0")
+local BasicComboPoints = LibStub("AceAddon-3.0"):NewAddon("BasicComboPoints", "AceEvent-3.0", "AceConsole-3.0")
+
+local function setLock()
+	if not db.lock then
+		display:SetBackdropColor(1,1,1,0)
+		display:EnableMouse(false)
+		display:SetMovable(false)
+		db.lock = true
+	else
+		display:SetBackdropColor(1,1,1,1)
+		display:EnableMouse(true)
+		display:SetMovable(true)
+		db.lock = nil
+	end
+end
+
+local bcpOptions = {
+	type = "group",
+	name = "BasicComboPoints",
+	args = {
+		intro = {
+			type = "description",
+			name = "BasicComboPoints is a numerical display of your current combo points, with extras such as a font and color chooser.",
+			order = 1,
+		},
+		font = {
+			order = 2,
+			name = "Font",
+			type = "group",
+			args = {
+				fontdesc = {
+					order = 1,
+					type = "description",
+					name = "Change the numerical font of the displayed points.",
+				},
+			},
+		},
+		color = {
+			order = 3,
+			name = "Color",
+			type = "group",
+			args = {
+				colordesc = {
+					order = 1,
+					type = "description",
+					name = "Choose the colors for the different points.",
+				},
+			},
+		},
+		lock = {
+			order = 4,
+			name = "Lock",
+			type = "group",
+			args = {
+				lockdesc = {
+					order = 1,
+					type = "description",
+					name = "Lock the points frame in its current location.",
+				},
+				lockset = {
+					name = "Lock",
+					type = "toggle",
+					get = function() return db.lock end,
+					set = setLock,
+					order = 2,
+				},
+			},
+		},
+	}
+}
 
 ------------------------------
 --      Initialization      --
@@ -34,6 +102,9 @@ local BasicComboPoints = LibStub("AceAddon-3.0"):NewAddon("BasicComboPoints", "A
 function BasicComboPoints:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("BasicComboPointsDB", defaults)
 	db = self.db.profile
+
+	LibStub("AceConfig-3.0"):RegisterOptionsTable("BasicComboPoints", bcpOptions)
+	self:RegisterChatCommand("bcp", function() LibStub("AceConfigDialog-3.0"):Open("BasicComboPoints") end)
 end
 
 ------------------------------
@@ -120,28 +191,3 @@ function BasicComboPoints:Update()
 	text:SetText(pts)
 end
 
-------------------------------
---     Slash Commands       --
-------------------------------
-
-_G["SlashCmdList"]["BASICCOMBOPOINTS"] = function(msg)
-	if string.lower(msg) == "lock" then
-		if not db.lock then
-			display:SetBackdropColor(1,1,1,0)
-			display:EnableMouse(false)
-			display:SetMovable(false)
-			db.lock = true
-			ChatFrame1:AddMessage("BasicComboPoints: Locked")
-		else
-			display:SetBackdropColor(1,1,1,1)
-			display:EnableMouse(true)
-			display:SetMovable(true)
-			db.lock = nil
-			ChatFrame1:AddMessage("BasicComboPoints: Unlocked")
-		end
-	elseif msg == "" then
-		ChatFrame1:AddMessage("BasicComboPoints: Commands:")
-		ChatFrame1:AddMessage("/bcp lock")
-	end
-end
-_G["SLASH_BASICCOMBOPOINTS1"] = "/bcp"
