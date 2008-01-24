@@ -2,7 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
-local class = select(2, UnitClass("player"))
+local _, class = UnitClass("player")
 if class == "ROGUE" or class == "DRUID" then
 	class = nil
 else
@@ -10,7 +10,7 @@ else
 	return
 end
 
-local points = GetComboPoints
+local GetComboPoints = GetComboPoints
 local display = nil
 local text = nil
 local font = nil
@@ -73,8 +73,20 @@ local bcpOptions = {
 				},
 			},
 		},
-		lock = {
+		size = {
 			order = 4,
+			name = "Size",
+			type = "group",
+			args = {
+				sizedesc = {
+					order = 1,
+					type = "description",
+					name = "Choose the size of the font for the different points.",
+				},
+			},
+		},
+		lock = {
+			order = 5,
 			name = "Lock",
 			type = "group",
 			args = {
@@ -167,27 +179,37 @@ end
 ------------------------------
 
 function BasicComboPoints:Update()
-	local pts = points()
+	local points = GetComboPoints()
 
-	if pts == 0 then
-		pts = ""
-	elseif pts == 1 then
+	if points == 0 then
+		points = ""
+	elseif points == 1 then
 		text:SetFont(font, 15)
 		text:SetTextColor(1, 1, 1)
-	elseif pts == 2 then
+		--text:SetFont(db.font, db.sizeone)
+		--text:SetTextColor(db.colorone)
+	elseif points == 2 then
 		text:SetFont(font, 25)
 		text:SetTextColor(0, 1, 0)
-	elseif pts == 3 then
+		--text:SetFont(db.font, db.sizetwo)
+		--text:SetTextColor(db.colortwo)
+	elseif points == 3 then
 		text:SetFont(font, 35)
 		text:SetTextColor(1, 1, 0)
-	elseif pts == 4 then
+		--text:SetFont(db.font, db.sizethree
+		--text:SetTextColor(db.colorthree)
+	elseif points == 4 then
 		text:SetFont(font, 45)
 		text:SetTextColor(0, 0, 1)
+		--text:SetFont(db.font, db.sizefour)
+		--text:SetTextColor(db.colorfour)
 	else
 		text:SetFont(font, 55)
 		text:SetTextColor(1, 0, 0)
+		--text:SetFont(db.font, db.sizefive)
+		--text:SetTextColor(db.colorfive)
 	end
 
-	text:SetText(pts)
+	text:SetText(points)
 end
 
