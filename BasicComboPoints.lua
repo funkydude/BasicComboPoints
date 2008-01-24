@@ -123,37 +123,34 @@ end
 --       Frame Setup        --
 ------------------------------
 
+local function move() this:StartMoving() end
+local function stop()
+	this:StopMovingOrSizing()
+	BasicComboPoints:SavePosition()
+end
+
 function BasicComboPoints:OnEnable()
 	if not display then
 		display = CreateFrame("Frame", "BCPFrame", UIParent)
 		display:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
 		display:SetFrameStrata("BACKGROUND")
 		display:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-		display:SetBackdropColor(1,1,1,1)
 		display:SetWidth(50)
 		display:SetHeight(50)
 		display:Show()
-		display:EnableMouse(true)
 		display:RegisterForDrag("LeftButton")
-		display:SetMovable(true)
-		display:SetScript("OnDragStart", function() this:StartMoving() end)
-		display:SetScript("OnDragStop", function()
-			this:StopMovingOrSizing()
-			self:SavePosition()
-		end)
+		display:SetScript("OnDragStart", move)
+		display:SetScript("OnDragStop", stop)
+		if not db.lock then
+			display:SetBackdropColor(1,1,1,1)
+			display:EnableMouse(true)
+			display:SetMovable(true)
+		end
 
-	local x = db.x
-	local y = db.y
-	if x and y then
+	if db.x then
 		local s = display:GetEffectiveScale()
 		display:ClearAllPoints()
-		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", x / s, y / s)
-	end
-
-	if db.lock then
-		display:SetBackdropColor(1,1,1,0)
-		display:EnableMouse(false)
-		display:SetMovable(false)
+		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db.x / s, db.y / s)
 	end
 
 		text = display:CreateFontString(nil,"OVERLAY")
