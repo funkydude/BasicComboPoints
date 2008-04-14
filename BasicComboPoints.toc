@@ -1,13 +1,13 @@
-﻿## Interface: 20300
+﻿## Interface: 20400
 ## Title: BasicComboPoints
-## Notes: Numerical display of current combo points
+## Notes: Numerical & customizable display of current combo points
 ## Author: Funkydude
 ## X-Category: Combat
 ## X-Website: http://wowace.com/wiki/BasicComboPoints
-## Version: 2.0
+## Version: 3.0
 ## SavedVariables: BasicComboPointsDB
-## OptionalDeps: Ace3, LibSharedMedia-2.0
-## X-Embeds: Ace3, LibSharedMedia-2.0
+## OptionalDeps: Ace3, LibSharedMedia-3.0
+## X-Embeds: Ace3, LibSharedMedia-3.0
 
 embeds.xml
 
