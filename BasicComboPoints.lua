@@ -246,6 +246,10 @@ end
 --      Initialization      --
 ------------------------------
 
+local function openConfig()
+	InterfaceOptionsFrame_OpenToFrame("BasicComboPoints")
+end
+
 function BasicComboPoints:OnInitialize()
 	self.db = LibStub("AceDB-3.0"):New("BasicComboPointsDB", defaults)
 	db = self.db.profile
@@ -257,6 +261,11 @@ function BasicComboPoints:OnInitialize()
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("BasicComboPoints", "BasicComboPoints")
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("BasicComboPointsColor", "Color", "BasicComboPoints")
 	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("BasicComboPointsSize", "Size", "BasicComboPoints")
+
+	_G["SlashCmdList"]["BASICCOMBOPOINTS_MAIN"] = openConfig
+	_G["SLASH_BASICCOMBOPOINTS_MAIN1"] = "/bcp"
+	_G["SlashCmdList"]["BASICCOMBOPOINTS_ALT"] = openConfig
+	_G["SLASH_BASICCOMBOPOINTS_ALT1"] = "/basiccombopoints"
 end
 
 ------------------------------
