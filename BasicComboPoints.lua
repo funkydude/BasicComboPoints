@@ -123,8 +123,8 @@ local function getBcpColor()
 					order = 3,
 					name = "Combo Point 1",
 					type = "color",
-					get = function() return db.size.one, db.colorone.g, db.colorone.b end,
-					set = function(_, v) db.size.one = v db.colorone.g = g db.colorone.b = b end,
+					get = function() return db.colorone.r, db.colorone.g, db.colorone.b end,
+					set = function(_, r, g, b) db.colorone.r = r db.colorone.g = g db.colorone.b = b end,
 					width = "full",
 				},
 				colortwo = {
@@ -151,7 +151,7 @@ local function getBcpColor()
 					name = "Combo Point 4",
 					type = "color",
 					get = function() return db.colorfour.r, db.colorfour.g, db.colorfour.b end,
-					set = function(_, r, g, b) db.colortwo.r = r db.colortwo.g = g db.colortwo.b = b end,
+					set = function(_, r, g, b) db.colorfour.r = r db.colorfour.g = g db.colorfour.b = b end,
 					width = "full",
 				},
 				colorfive = {
