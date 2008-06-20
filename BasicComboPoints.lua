@@ -1,4 +1,4 @@
-﻿------------------------------
+------------------------------
 --      Are you local?      --
 ------------------------------
 
@@ -41,30 +41,26 @@ local media = LibStub("LibSharedMedia-3.0")
 local bcpOptions
 local function getOptions()
 	if not bcpOptions then
+		local L = LibStub("AceLocale-3.0"):GetLocale("BasicComboPoints", true)
 		bcpOptions = {
-			type = "group",
 			name = "BasicComboPoints",
-			childGroups = "tab",
+			childGroups = "tab", type = "group",
 			args = {
 				main = {
 					name = _G["MISCELLANEOUS"],
-					type = "group",
-					order = 1,
+					order = 1, type = "group",
 					args = {
 						intro = {
-							type = "description",
-							name = "BasicComboPoints is a numerical display of your current combo points, with extras such as a font and color chooser.",
-							order = 1,
+							name = L["desc"],
+							order = 1, type = "description",
 						},
 						spacer = {
-							type = "header",
 							name = "",
-							order = 2,
+							order = 2, type = "header",
 						},
 						lock = {
-							name = _G["LOCK"],
-							desc = "Lock the points frame in its current location.",
-							type = "toggle",
+							name = _G["LOCK"], desc = L["Lock the points frame in its current location."],
+							order = 3, type = "toggle",
 							get = function() return db.lock end,
 							set = function(_, state) db.lock = state
 								if not state then
@@ -77,12 +73,10 @@ local function getOptions()
 								display:EnableMouse(state)
 								display:SetMovable(state)
 							end,
-							order = 3,
 						},
 						font = {
-							desc = "Apply the font you wish to use for your Combo Points.",
-							type = "select", 
-							name = "Font",
+							name = L["Font"], desc = L["Apply the font you wish to use for your Combo Points."],
+							order = 4, type = "select", 
 							values = media:List("font"),
 							get = function()
 								for k, v in pairs(media:List("font")) do
@@ -95,136 +89,109 @@ local function getOptions()
 								db.font = media:List("font")[font]
 								BasicComboPoints:SetFont()
 							end,
-							order = 4,
 						},
 					},
 				},
 				color = {
 					name = _G["COLOR"],
-					type = "group",
-					order = 2,
+					order = 2, type = "group",
 					args = {
 						desc = {
-							type = "description",
-							name = "Apply the color you wish to use for your Combo Points.",
-							order = 1,
+							name = L["Apply the color you wish to use for your Combo Points."],
+							order = 1, type = "description",
 						},
 						spacer = {
-							type = "header",
 							name = "",
-							order = 2,
+							order = 2, type = "header",
 						},
 						colorone = {
-							desc = "Apply the color you wish to use for Combo Point 1.",
-							order = 3,
 							name = format(_G["COMBAT_TEXT_COMBO_POINTS"], 1),
-							type = "color",
+							desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 1),
+							order = 3, type = "color", width = "full",
 							get = function() return db.colorone.r, db.colorone.g, db.colorone.b end,
 							set = function(_, r, g, b) db.colorone.r = r db.colorone.g = g db.colorone.b = b end,
-							width = "full",
 						},
 						colortwo = {
-							desc = "Apply the color you wish to use for Combo Point 2.",
-							order = 4,
 							name = format(_G["COMBAT_TEXT_COMBO_POINTS"], 2),
-							type = "color",
+							desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 2),
+							order = 4, type = "color", width = "full",
 							get = function() return db.colortwo.r, db.colortwo.g, db.colortwo.b end,
 							set = function(_, r, g, b) db.colortwo.r = r db.colortwo.g = g db.colortwo.b = b end,
-							width = "full",
 						},
 						colorthree = {
-							desc = "Apply the color you wish to use for Combo Point 3.",
-							order = 5,
 							name = format(_G["COMBAT_TEXT_COMBO_POINTS"], 3),
-							type = "color",
+							desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 3),
+							order = 5, type = "color", width = "full",
 							get = function() return db.colorthree.r, db.colorthree.g, db.colorthree.b end,
 							set = function(_, r, g, b) db.colorthree.r = r db.colorthree.g = g db.colorthree.b = b end,
-							width = "full",
 						},
 						colorfour = {
-							desc = "Apply the color you wish to use for Combo Point 4.",
-							order = 6,
 							name = format(_G["COMBAT_TEXT_COMBO_POINTS"], 4),
-							type = "color",
+							desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 4),
+							order = 6, type = "color", width = "full",
 							get = function() return db.colorfour.r, db.colorfour.g, db.colorfour.b end,
 							set = function(_, r, g, b) db.colorfour.r = r db.colorfour.g = g db.colorfour.b = b end,
-							width = "full",
 						},
 						colorfive = {
-							desc = "Apply the color you wish to use for Combo Point 5.",
-							order = 7,
 							name = format(_G["COMBAT_TEXT_COMBO_POINTS"], 5),
-							type = "color",
+							desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 5),
+							order = 7, type = "color", width = "full",
 							get = function() return db.colorfive.r, db.colorfive.g, db.colorfive.b end,
 							set = function(_, r, g, b) db.colorfive.r = r db.colorfive.g = g db.colorfive.b = b end,
-							width = "full",
 						},
 					},
 				},
 				size = {
 					name = _G["FONT_SIZE"],
-					type = "group",
-					order = 3,
+					order = 3, type = "group",
 					args = {
 						desc = {
-							type = "description",
-							name = "Apply the size you wish to use for your Combo Points.",
-							order = 1,
+							name = L["Apply the size you wish to use for your Combo Points."],
+							order = 1, type = "description",
 						},
 						spacer = {
-							type = "header",
 							name = "",
-							order = 2,
+							order = 2, type = "header",
 						},
 						sizeone = {
-							desc = "Apply the size you wish to use for Combo Point 1.",
-							order = 3,
 							name = format(_G["COMBAT_TEXT_COMBO_POINTS"], 1),
-							type = "range",
+							desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 1),
+							order = 3, type = "range", width = "full",
 							min = 1, max = 48, step = 1,
 							get = function() return db.size.one end,
 							set = function(_, v) db.size.one = v end,
-							width = "full",
 						},
 						sizetwo = {
-							desc = "Apply the size you wish to use for Combo Point 2.",
-							order = 4,
 							name = format(_G["COMBAT_TEXT_COMBO_POINTS"], 2),
-							type = "range",
+							desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 2),
+							order = 4, type = "range", width = "full",
 							min = 1, max = 48, step = 1,
 							get = function() return db.size.two end,
 							set = function(_, v) db.size.two = v end,
-							width = "full",
 						},
 						sizethree = {
-							desc = "Apply the size you wish to use for Combo Point 3.",
-							order = 5,
 							name = format(_G["COMBAT_TEXT_COMBO_POINTS"], 3),
-							type = "range",
+							desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 3),
+							order = 5, type = "range", width = "full",
 							min = 1, max = 48, step = 1,
 							get = function() return db.size.three end,
 							set = function(_, v) db.size.three = v end,
-							width = "full",
 						},
 						sizefour = {
-							desc = "Apply the size you wish to use for Combo Point 4.",
-							order = 6,
 							name = format(_G["COMBAT_TEXT_COMBO_POINTS"], 4),
-							type = "range",
+							desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 4),
+							order = 6, type = "range", width = "full",
 							min = 1, max = 48, step = 1,
 							get = function() return db.size.four end,
 							set = function(_, v) db.size.four = v end,
-							width = "full",
 						},
 						sizefive = {
-							desc = "Apply the size you wish to use for Combo Point 5.",
-							order = 7,
 							name = format(_G["COMBAT_TEXT_COMBO_POINTS"], 5),
-							type = "range",
+							desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 5),
+							order = 7, type = "range", width = "full",
 							min = 1, max = 48, step = 1,
 							get = function() return db.size.five end,
 							set = function(_, v) db.size.five = v end,
-							width = "full",
 						},
 					},
 				},
