@@ -1,4 +1,5 @@
 local L = LibStub("AceLocale-3.0"):NewLocale("BasicComboPoints","frFR")
+if not L then return end
 
 L["desc"] = "BasicComboPoints est un affichage numérique de vos points de combo actuels, avec quelques extras comme la sélection de la police et de la couleur."
 
