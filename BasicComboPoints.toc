@@ -1,6 +1,7 @@
 ## Interface: 20400
 ## Title: BasicComboPoints
 ## Notes: Numerical & customizable display of current combo points.
+## Notes-frFR: Affichage numérique & personnalisable de vos points de combo actuels.
 ## Author: Funkydude
 ## X-Category: Combat
 ## X-Website: http://wowace.com/wiki/BasicComboPoints
@@ -12,5 +13,6 @@
 embeds.xml
 
 Locales\enUS.lua
+Locales\frFR.lua
 
 BasicComboPoints.lua
