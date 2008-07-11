@@ -13,3 +13,9 @@ L["Apply the color you wish to use for your Combo Points."] = "Détermine la cou
 L["Apply the %s you wish to use for Combo Point %d."] = "Détermine la %s à utiliser quand vous avez %d |4point:points; de combo."
 
 L["Apply the size you wish to use for your Combo Points."] = "Détermine la taille de police à utiliser pour vos points de combo."
+
+L["Apply a shadow to your text."] = true
+
+L["Outline"] = true
+L["Apply a outline to your text."] = true
+L["Thick Outline"] = true

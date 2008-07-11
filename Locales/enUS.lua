@@ -12,3 +12,9 @@ L["Apply the color you wish to use for your Combo Points."] = true
 L["Apply the %s you wish to use for Combo Point %d."] = true
 
 L["Apply the size you wish to use for your Combo Points."] = true
+
+L["Apply a shadow to your text."] = true
+
+L["Outline"] = true
+L["Apply a outline to your text."] = true
+L["Thick Outline"] = true

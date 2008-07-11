@@ -4,8 +4,8 @@
 ## Notes-frFR: Affichage numérique & personnalisable de vos points de combo actuels.
 ## Author: Funkydude
 ## X-Category: Combat
-## X-Website: http://wowace.com/wiki/BasicComboPoints
-## Version: 3.0
+## X-Website: http://www.wowace.com/wiki/BasicComboPoints
+## Version: 3.1
 ## SavedVariables: BasicComboPointsDB
 ## OptionalDeps: Ace3, LibSharedMedia-3.0
 ## X-Embeds: Ace3, LibSharedMedia-3.0

@@ -7,32 +7,19 @@ if class == "ROGUE" or class == "DRUID" then
 	class = nil
 else
 	DisableAddOn("BasicComboPoints")
+	ChatFrame1:AddMessage("BasicComboPoints: ".. _G["ADDON_DISABLED"])
 	return
 end
 
+local BCP = _G.CreateFrame("Frame", "BasicComboPoints", UIParent)
+local media = _G.LibStub("LibSharedMedia-3.0")
 local GetComboPoints = _G.GetComboPoints
-local text = nil
-local display = nil
 local font = nil
-
 local db
-local defaults = {
-	profile = {
-		x = nil,
-		y = nil,
-		lock = nil,
-		font = "Friz Quadrata TT",
-		size = { one = 15, two = 25, three = 35, four = 45, five = 55 },
-		colorone = { r = 1, g = 1, b = 1 },
-		colortwo = { r = 0, g = 1, b = 0 },
-		colorthree = { r = 1, g = 1, b = 0 },
-		colorfour = { r = 0, g = 0, b = 1 },
-		colorfive = { r = 1, g = 0, b = 0 },
-	}
-}
 
-local BasicComboPoints = LibStub("AceAddon-3.0"):NewAddon("BasicComboPoints")
-local media = LibStub("LibSharedMedia-3.0")
+BCP:SetScript("OnEvent", function(_, event, ...) BCP[event](BCP, ...) end)
+BCP:RegisterEvent("PLAYER_LOGIN")
+BCP:RegisterEvent("ADDON_LOADED")
 
 ------------------------------
 --           Config         --
@@ -41,7 +28,7 @@ local media = LibStub("LibSharedMedia-3.0")
 local bcpOptions
 local function getOptions()
 	if not bcpOptions then
-		local L = LibStub("AceLocale-3.0"):GetLocale("BasicComboPoints", true)
+		local L = _G.LibStub("AceLocale-3.0"):GetLocale("BasicComboPoints", true)
 		bcpOptions = {
 			name = "BasicComboPoints",
 			childGroups = "tab", type = "group",
@@ -87,8 +74,30 @@ local function getOptions()
 							end,
 							set = function(_, font)
 								db.font = media:List("font")[font]
-								BasicComboPoints:SetFont()
+								BCP:SetFont()
 							end,
+						},
+						shadow = {
+							name = _G["DAMAGE_SCHOOL6"], desc = L["Apply a shadow to your text."],
+							order = 5, type = "toggle",
+							get = function() return db.shadow end,
+							set = function(_, state) db.shadow = state
+								if state then
+									BCP.text:SetShadowColor(0, 0, 0, 1)
+									BCP.text:SetShadowOffset(1, -1)
+								else
+									BCP.text:SetShadowColor(0, 0, 0, 0)
+									BCP.text:SetShadowOffset(0, 0)
+								end
+								BCP:Update()
+							end,
+						},
+						outline = {
+							name = L["Outline"], desc = L["Apply a outline to your text."],
+							order = 5, type = "select",
+							values = {NONE = _G["NONE"], OUTLINE = L["Outline"], THICKOUTLINE = L["Thick Outline"]},
+							get = function() return db.outline end,
+							set = function(_, value) db.outline = value BCP:Update() end,
 						},
 					},
 				},
@@ -205,102 +214,124 @@ end
 --      Initialization      --
 ------------------------------
 
-function BasicComboPoints:OnInitialize()
-	self.db = LibStub("AceDB-3.0"):New("BasicComboPointsDB", defaults)
-	db = self.db.profile
+function BCP:ADDON_LOADED(msg)
+	if msg == "BasicComboPoints" then
+		self:UnregisterEvent("ADDON_LOADED")
+		local defaults = {
+			profile = {
+				shadow = true,
+				outline = "NONE",
+				font = "Friz Quadrata TT",
+				size = { one = 15, two = 25, three = 35, four = 45, five = 55 },
+				colorone = { r = 1, g = 1, b = 1 },
+				colortwo = { r = 0, g = 1, b = 0 },
+				colorthree = { r = 1, g = 1, b = 0 },
+				colorfour = { r = 0, g = 0, b = 1 },
+				colorfive = { r = 1, g = 0, b = 0 },
+			}
+		}
+		self.db = _G.LibStub("AceDB-3.0"):New("BasicComboPointsDB", defaults)
+		db = self.db.profile
 
-	LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("BasicComboPoints", getOptions)
-	LibStub("AceConfigDialog-3.0"):AddToBlizOptions("BasicComboPoints", "BasicComboPoints")
+		_G.LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("BasicComboPoints", getOptions)
+		_G.LibStub("AceConfigDialog-3.0"):AddToBlizOptions("BasicComboPoints", "BasicComboPoints")
 
-	_G["SlashCmdList"]["BASICCOMBOPOINTS_MAIN"] = function() InterfaceOptionsFrame_OpenToFrame("BasicComboPoints") end
-	_G["SLASH_BASICCOMBOPOINTS_MAIN1"] = "/bcp"
-	_G["SLASH_BASICCOMBOPOINTS_MAIN2"] = "/basiccombopoints"
+		_G.SlashCmdList["BASICCOMBOPOINTS_MAIN"] = function()
+			InterfaceOptionsFrame_OpenToFrame("BasicComboPoints")
+		end
+		_G.SLASH_BASICCOMBOPOINTS_MAIN1 = "/bcp"
+		_G.SLASH_BASICCOMBOPOINTS_MAIN2 = "/basiccombopoints"
+		self.ADDON_LOADED = nil
+	end
 end
 
 ------------------------------
 --       Frame Setup        --
 ------------------------------
 
-function BasicComboPoints:OnEnable()
-	display = CreateFrame("Frame", "BCPFrame", UIParent)
-	display:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
-	display:SetFrameStrata("BACKGROUND")
-	display:SetClampedToScreen(true)
-	display:SetPoint("CENTER", UIParent, "CENTER", 0, 0)
-	display:SetBackdropColor(1,1,1,0)
-	display:SetWidth(50)
-	display:SetHeight(50)
-	display:Show()
-	display:RegisterForDrag("LeftButton")
-	display:SetScript("OnDragStart", function() this:StartMoving() end)
-	display:SetScript("OnDragStop", function() this:StopMovingOrSizing()
-		local s = display:GetEffectiveScale()
-		db.x = display:GetLeft() * s
-		db.y = display:GetTop() * s
+function BCP:PLAYER_LOGIN()
+	self:UnregisterEvent("PLAYER_LOGIN")
+	self:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
+	self:SetFrameStrata("BACKGROUND")
+	self:SetClampedToScreen(true)
+	self:SetPoint("CENTER", UIParent, "CENTER")
+	self:SetBackdropColor(1,1,1,0)
+	self:SetWidth(50)
+	self:SetHeight(50)
+	self:Show()
+	self:RegisterForDrag("LeftButton")
+	self:SetScript("OnDragStart", function() this:StartMoving() end)
+	self:SetScript("OnDragStop", function() this:StopMovingOrSizing()
+		local s = self:GetEffectiveScale()
+		db.x = self:GetLeft() * s
+		db.y = self:GetTop() * s
 	end)
-	display:SetScript("OnEvent", function() BasicComboPoints:Update() end)
+	self:SetScript("OnEvent", function() self:Update() end)
 	if not db.lock then
-		display:SetBackdropColor(1,1,1,1)
-		display:EnableMouse(true)
-		display:SetMovable(true)
+		self:SetBackdropColor(1,1,1,1)
+		self:EnableMouse(true)
+		self:SetMovable(true)
 	end
 
 	if db.x then
-		local s = display:GetEffectiveScale()
-		display:ClearAllPoints()
-		display:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db.x / s, db.y / s)
+		local s = self:GetEffectiveScale()
+		self:ClearAllPoints()
+		self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db.x / s, db.y / s)
 	end
 
-	text = display:CreateFontString("BCPText", "OVERLAY")
-	text:SetPoint("CENTER", display, "CENTER")
+	self.text = self:CreateFontString("BasicComboPointsText", "OVERLAY")
+	self.text:SetPoint("CENTER", self, "CENTER")
 	font = media:Fetch("font", db.font)
-	text:SetShadowColor(0, 0, 0, 1)
-	text:SetShadowOffset(1, -1)
-	text:SetFont(font, 15)
+	if db.shadow then
+		self.text:SetShadowColor(0, 0, 0, 1)
+		self.text:SetShadowOffset(1, -1)
+	end
+	self.text:SetFont(font, 15, db.outline)
 
-	display:RegisterEvent("PLAYER_COMBO_POINTS")
-	display:RegisterEvent("PLAYER_TARGET_CHANGED")
+	self:RegisterEvent("PLAYER_COMBO_POINTS")
+	self:RegisterEvent("PLAYER_TARGET_CHANGED")
 
 	media.RegisterCallback(self, "LibSharedMedia_Registered", "SetFont")
 	media.RegisterCallback(self, "LibSharedMedia_SetGlobal", "SetFont")
+	self.PLAYER_LOGIN = nil
 end
 
 ------------------------------
 --       Point Update       --
 ------------------------------
 
-function BasicComboPoints:SetFont()
+function BCP:SetFont()
 	font = media:Fetch("font", db.font)
 	self:Update()
 end
 
-function BasicComboPoints:Update()
+function BCP:Update()
 	local points = GetComboPoints()
 
 	if points == 0 then
 		points = ""
 	elseif points == 1 then
-		text:SetFont(font, db.size.one)
+		self.text:SetFont(font, db.size.one, db.outline)
 		local color = db.colorone
-		text:SetTextColor(color.r,color.g,color.b)
+		self.text:SetTextColor(color.r,color.g,color.b)
 	elseif points == 2 then
-		text:SetFont(font, db.size.two)
+		self.text:SetFont(font, db.size.two, db.outline)
 		local color = db.colortwo
-		text:SetTextColor(color.r,color.g,color.b)
+		self.text:SetTextColor(color.r,color.g,color.b)
 	elseif points == 3 then
-		text:SetFont(font, db.size.three)
+		self.text:SetFont(font, db.size.three, db.outline)
 		local color = db.colorthree
-		text:SetTextColor(color.r,color.g,color.b)
+		self.text:SetTextColor(color.r,color.g,color.b)
 	elseif points == 4 then
-		text:SetFont(font, db.size.four)
+		self.text:SetFont(font, db.size.four, db.outline)
 		local color = db.colorfour
-		text:SetTextColor(color.r,color.g,color.b)
+		self.text:SetTextColor(color.r,color.g,color.b)
 	else
-		text:SetFont(font, db.size.five)
+		self.text:SetFont(font, db.size.five, db.outline)
 		local color = db.colorfive
-		text:SetTextColor(color.r,color.g,color.b)
+		self.text:SetTextColor(color.r,color.g,color.b)
 	end
 
-	text:SetText(points)
+	self.text:SetText(points)
 end
 
