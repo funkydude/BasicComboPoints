@@ -72,9 +72,10 @@ local function getOptions()
 									end
 								end
 							end,
-							set = function(_, font)
-								db.font = media:List("font")[font]
-								BCP:SetFont()
+							set = function(_, newfont)
+								db.font = media:List("font")[newfont]
+								font = media:Fetch("font", db.font)
+								BCP:Update()
 							end,
 						},
 						shadow = {
@@ -291,19 +292,12 @@ function BCP:PLAYER_LOGIN()
 	self:RegisterEvent("PLAYER_COMBO_POINTS")
 	self:RegisterEvent("PLAYER_TARGET_CHANGED")
 
-	media.RegisterCallback(self, "LibSharedMedia_Registered", "SetFont")
-	media.RegisterCallback(self, "LibSharedMedia_SetGlobal", "SetFont")
 	self.PLAYER_LOGIN = nil
 end
 
 ------------------------------
 --       Point Update       --
 ------------------------------
-
-function BCP:SetFont()
-	font = media:Fetch("font", db.font)
-	self:Update()
-end
 
 function BCP:Update()
 	local points = GetComboPoints()
