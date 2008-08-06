@@ -51,14 +51,14 @@ local function getOptions()
 							get = function() return db.lock end,
 							set = function(_, state) db.lock = state
 								if not state then
-									display:SetBackdropColor(1,1,1,1)
+									BCP:SetBackdropColor(1,1,1,1)
 									state = true
 								else
-									display:SetBackdropColor(1,1,1,0)
+									BCP:SetBackdropColor(1,1,1,0)
 									state = nil
 								end
-								display:EnableMouse(state)
-								display:SetMovable(state)
+								BCP:EnableMouse(state)
+								BCP:SetMovable(state)
 							end,
 						},
 						font = {
