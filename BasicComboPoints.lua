@@ -262,8 +262,8 @@ function BCP:PLAYER_LOGIN()
 	self:SetHeight(50)
 	self:Show()
 	self:RegisterForDrag("LeftButton")
-	self:SetScript("OnDragStart", function() this:StartMoving() end)
-	self:SetScript("OnDragStop", function() this:StopMovingOrSizing()
+	self:SetScript("OnDragStart", function(frame) frame:StartMoving() end)
+	self:SetScript("OnDragStop", function(frame) frame:StopMovingOrSizing()
 		local s = self:GetEffectiveScale()
 		db.x = self:GetLeft() * s
 		db.y = self:GetTop() * s
