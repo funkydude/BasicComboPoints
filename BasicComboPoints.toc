@@ -5,7 +5,7 @@
 ## Author: Funkydude
 ## X-Category: Combat
 ## X-License: All Rights Reserved
-## Version: 3.4
+## Version: 3.41
 ## SavedVariables: BasicComboPointsDB
 ## OptionalDeps: Ace3, LibSharedMedia-3.0
 ## X-Embeds: Ace3, LibSharedMedia-3.0

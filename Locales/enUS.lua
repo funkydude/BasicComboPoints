@@ -1,5 +1,6 @@
 
 local _, tbl = ...
+tbl.L = {}
 local L = tbl.L
 
 L["BasicComboPoints is a numerical display of your current combo points, with extras such as a font and color chooser."] = "BasicComboPoints is a numerical display of your current combo points, with extras such as a font and color chooser."
