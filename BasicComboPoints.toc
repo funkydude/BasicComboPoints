@@ -1,11 +1,11 @@
-## Interface: 40300
+## Interface: 50001
 ## Title: BasicComboPoints
 ## Notes: Numerical & customizable display of current combo points.
 ## Notes-frFR: Affichage numérique & personnalisable de vos points de combo actuels.
 ## Author: Funkydude
 ## X-Category: Combat
 ## X-License: All Rights Reserved
-## Version: 3.3
+## Version: 3.4
 ## SavedVariables: BasicComboPointsDB
 ## OptionalDeps: Ace3, LibSharedMedia-3.0
 ## X-Embeds: Ace3, LibSharedMedia-3.0
@@ -13,7 +13,16 @@
 embeds.xml
 
 Locales\enUS.lua
+Locales\ptBR.lua
 Locales\frFR.lua
+Locales\deDE.lua
+Locales\itIT.lua
+Locales\koKR.lua
+Locales\esMX.lua
+Locales\ruRU.lua
+Locales\zhCN.lua
+Locales\esES.lua
+Locales\zhTW.lua
 
 BasicComboPoints.lua
 

@@ -2,18 +2,19 @@
 --      Are you local?      --
 ------------------------------
 
+local name, tbl = ...
 local class = select(2, UnitClass("player"))
 if class == "ROGUE" or class == "DRUID" then
 	class = nil
 else
-	DisableAddOn("BasicComboPoints")
+	DisableAddOn(name)
 	ChatFrame1:AddMessage("BasicComboPoints: ".. _G["ADDON_DISABLED"])
 	return
 end
 
-local BCP = _G.CreateFrame("Frame", "BasicComboPoints", UIParent)
-local media = _G.LibStub("LibSharedMedia-3.0")
-local GetComboPoints = _G.GetComboPoints
+local BCP = CreateFrame("Frame", name, UIParent)
+local media = LibStub("LibSharedMedia-3.0")
+local GetComboPoints = GetComboPoints
 local font = nil
 local db
 local player = "player"
@@ -29,9 +30,9 @@ BCP:RegisterEvent("ADDON_LOADED")
 local bcpOptions
 local function getOptions()
 	if not bcpOptions then
-		local L = _G.LibStub("AceLocale-3.0"):GetLocale("BasicComboPoints", true)
+		local L = tbl.L
 		bcpOptions = {
-			name = "BasicComboPoints",
+			name = name,
 			childGroups = "tab", type = "group",
 			args = {
 				main = {
@@ -39,7 +40,7 @@ local function getOptions()
 					order = 1, type = "group",
 					args = {
 						intro = {
-							name = L["desc"],
+							name = L["BasicComboPoints is a numerical display of your current combo points, with extras such as a font and color chooser."],
 							order = 1, type = "description",
 						},
 						spacer = {
@@ -217,7 +218,7 @@ end
 ------------------------------
 
 function BCP:ADDON_LOADED(msg)
-	if msg == "BasicComboPoints" then
+	if msg == name then
 		self:UnregisterEvent("ADDON_LOADED")
 		local defaults = {
 			profile = {
@@ -232,17 +233,17 @@ function BCP:ADDON_LOADED(msg)
 				colorfive = { r = 1, g = 0, b = 0 },
 			}
 		}
-		self.db = _G.LibStub("AceDB-3.0"):New("BasicComboPointsDB", defaults)
+		self.db = LibStub("AceDB-3.0"):New("BasicComboPointsDB", defaults)
 		db = self.db.profile
 
-		_G.LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable("BasicComboPoints", getOptions)
-		_G.LibStub("AceConfigDialog-3.0"):AddToBlizOptions("BasicComboPoints", "BasicComboPoints")
+		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(name, getOptions)
+		LibStub("AceConfigDialog-3.0"):AddToBlizOptions(name, name)
 
-		_G.SlashCmdList["BASICCOMBOPOINTS_MAIN"] = function()
-			InterfaceOptionsFrame_OpenToCategory("BasicComboPoints")
+		SlashCmdList["BASICCOMBOPOINTS_MAIN"] = function()
+			InterfaceOptionsFrame_OpenToCategory(name)
 		end
-		_G.SLASH_BASICCOMBOPOINTS_MAIN1 = "/bcp"
-		_G.SLASH_BASICCOMBOPOINTS_MAIN2 = "/basiccombopoints"
+		SLASH_BASICCOMBOPOINTS_MAIN1 = "/bcp"
+		SLASH_BASICCOMBOPOINTS_MAIN2 = "/basiccombopoints"
 		self.ADDON_LOADED = nil
 	end
 end
