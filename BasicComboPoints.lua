@@ -3,13 +3,13 @@
 ------------------------------
 
 local name, tbl = ...
-local class = select(2, UnitClass("player"))
-if class == "ROGUE" or class == "DRUID" then
-	class = nil
-else
-	DisableAddOn(name)
-	ChatFrame1:AddMessage("BasicComboPoints: ".. _G["ADDON_DISABLED"])
-	return
+do
+	local _, class = UnitClass("player")
+	if class ~= "ROGUE" and class ~= "DRUID" then
+		DisableAddOn(name)
+		ChatFrame1:AddMessage("BasicComboPoints: ".. _G["ADDON_DISABLED"])
+		return
+	end
 end
 
 local BCP = CreateFrame("Frame", name, UIParent)
