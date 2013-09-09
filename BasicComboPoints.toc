@@ -1,11 +1,11 @@
-## Interface: 50300
+## Interface: 50400
 ## Title: BasicComboPoints
 ## Notes: Numerical & customizable display of current combo points.
 ## Notes-frFR: Affichage numérique & personnalisable de vos points de combo actuels.
 ## Author: Funkydude
 ## X-Category: Combat
 ## X-License: All Rights Reserved
-## Version: 3.44
+## Version: 3.45
 ## SavedVariables: BasicComboPointsDB
 ## OptionalDeps: Ace3, LibSharedMedia-3.0
 ## X-Embeds: Ace3, LibSharedMedia-3.0
