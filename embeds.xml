@@ -2,12 +2,13 @@
 ..\FrameXML\UI.xsd">
 
 <Script file="Libs\LibStub\LibStub.lua"/>
+<!--@no-lib-strip@-->
 <Include file="Libs\CallbackHandler-1.0\CallbackHandler-1.0.xml"/>
 <Include file="Libs\AceDB-3.0\AceDB-3.0.xml"/>
 <Include file="Libs\AceGUI-3.0\AceGUI-3.0.xml"/>
 <Include file="Libs\AceConfigRegistry-3.0\AceConfigRegistry-3.0.xml"/>
 <Include file="Libs\AceConfigDialog-3.0\AceConfigDialog-3.0.xml"/>
 <Include file="Libs\LibSharedMedia-3.0\lib.xml"/>
-
+<!--@end-no-lib-strip@-->
 </Ui>
 
