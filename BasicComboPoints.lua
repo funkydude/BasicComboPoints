@@ -236,7 +236,7 @@ function BCP:ADDON_LOADED(msg)
 		self.db = LibStub("AceDB-3.0"):New("BasicComboPointsDB", defaults)
 		db = self.db.profile
 
-		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(name, getOptions)
+		LibStub("AceConfigRegistry-3.0"):RegisterOptionsTable(name, getOptions, true)
 		LibStub("AceConfigDialog-3.0"):AddToBlizOptions(name, name)
 
 		SlashCmdList["BASICCOMBOPOINTS_MAIN"] = function()
