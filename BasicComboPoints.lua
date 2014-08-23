@@ -17,7 +17,6 @@ local media = LibStub("LibSharedMedia-3.0")
 local GetComboPoints = GetComboPoints
 local font = nil
 local db
-local player = "player"
 
 BCP:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
 BCP:RegisterEvent("PLAYER_LOGIN")
@@ -291,7 +290,7 @@ function BCP:PLAYER_LOGIN()
 	end
 	self.text:SetFont(font, 15, db.outline)
 
-	self:RegisterEvent("UNIT_COMBO_POINTS")
+	self:RegisterUnitEvent("UNIT_COMBO_POINTS", "player")
 	self:RegisterEvent("PLAYER_TARGET_CHANGED")
 
 	self.PLAYER_LOGIN = nil
@@ -302,15 +301,10 @@ end
 ------------------------------
 
 function BCP:Update(unit)
-	--only return if there is a unit and it's not player
-	--since PTC doesn't pass a unit
-	if unit and unit ~= player then return end
+	-- Get current points
+	local points = GetComboPoints("player")
 
-	--get current points
-	local points = GetComboPoints(player)
-	--print(points)
-
-	--set colors and sizes according to point count
+	-- Set colors and sizes according to point count
 	if points == 0 then
 		points = ""
 	elseif points == 1 then
@@ -335,7 +329,7 @@ function BCP:Update(unit)
 		self.text:SetTextColor(color.r,color.g,color.b)
 	end
 
-	--display points
+	-- Display points
 	self.text:SetText(points)
 end
 
