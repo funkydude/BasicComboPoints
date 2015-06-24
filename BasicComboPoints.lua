@@ -14,8 +14,8 @@ end
 
 local BCP = CreateFrame("Frame", name, UIParent)
 local media = LibStub("LibSharedMedia-3.0")
-local GetComboPoints = GetComboPoints
 local font = nil
+local Update
 local db
 
 BCP:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
@@ -268,7 +268,7 @@ function BCP:PLAYER_LOGIN()
 		db.x = self:GetLeft() * s
 		db.y = self:GetTop() * s
 	end)
-	self:SetScript("OnEvent", function(self, event, ...) self:Update(...) end)
+	self:SetScript("OnEvent", Update)
 	if not db.lock then
 		self:SetBackdropColor(1,1,1,1)
 		self:EnableMouse(true)
@@ -291,7 +291,6 @@ function BCP:PLAYER_LOGIN()
 	self.text:SetFont(font, 15, db.outline)
 
 	self:RegisterUnitEvent("UNIT_COMBO_POINTS", "player")
-	self:RegisterEvent("PLAYER_TARGET_CHANGED")
 
 	self.PLAYER_LOGIN = nil
 end
@@ -300,36 +299,47 @@ end
 --       Point Update       --
 ------------------------------
 
-function BCP:Update(unit)
-	-- Get current points
-	local points = GetComboPoints("player")
+do
+	local GetComboPoints = GetComboPoints
+	local UnitGUID = UnitGUID
+	local points = 0
+	function Update(self, event, unit)
+		local target = UnitGUID("target")
+		if target then
+			points = GetComboPoints(unit) -- Only get points if we have a target, it reports 0 with no target even if we have points
+		else
+			if points > 0 then
+				points = points - 1 -- We don't have a target but we want to display the combo point decay over time, calculate it based on our last known points
+			end
+		end
 
-	-- Set colors and sizes according to point count
-	if points == 0 then
-		points = ""
-	elseif points == 1 then
-		self.text:SetFont(font, db.size.one, db.outline)
-		local color = db.colorone
-		self.text:SetTextColor(color.r,color.g,color.b)
-	elseif points == 2 then
-		self.text:SetFont(font, db.size.two, db.outline)
-		local color = db.colortwo
-		self.text:SetTextColor(color.r,color.g,color.b)
-	elseif points == 3 then
-		self.text:SetFont(font, db.size.three, db.outline)
-		local color = db.colorthree
-		self.text:SetTextColor(color.r,color.g,color.b)
-	elseif points == 4 then
-		self.text:SetFont(font, db.size.four, db.outline)
-		local color = db.colorfour
-		self.text:SetTextColor(color.r,color.g,color.b)
-	else
-		self.text:SetFont(font, db.size.five, db.outline)
-		local color = db.colorfive
-		self.text:SetTextColor(color.r,color.g,color.b)
+		-- Set colors and sizes according to point count
+		if points == 0 then
+			points = ""
+		elseif points == 1 then
+			self.text:SetFont(font, db.size.one, db.outline)
+			local color = db.colorone
+			self.text:SetTextColor(color.r,color.g,color.b)
+		elseif points == 2 then
+			self.text:SetFont(font, db.size.two, db.outline)
+			local color = db.colortwo
+			self.text:SetTextColor(color.r,color.g,color.b)
+		elseif points == 3 then
+			self.text:SetFont(font, db.size.three, db.outline)
+			local color = db.colorthree
+			self.text:SetTextColor(color.r,color.g,color.b)
+		elseif points == 4 then
+			self.text:SetFont(font, db.size.four, db.outline)
+			local color = db.colorfour
+			self.text:SetTextColor(color.r,color.g,color.b)
+		else
+			self.text:SetFont(font, db.size.five, db.outline)
+			local color = db.colorfive
+			self.text:SetTextColor(color.r,color.g,color.b)
+		end
+
+		-- Display points
+		self.text:SetText(points)
 	end
-
-	-- Display points
-	self.text:SetText(points)
 end
 

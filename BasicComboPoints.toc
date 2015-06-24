@@ -1,4 +1,4 @@
-## Interface: 60100
+## Interface: 60200
 ## Title: BasicComboPoints
 ## Notes: Numerical & customizable display of current combo points.
 ## Notes-frFR: Affichage numérique & personnalisable de vos points de combo actuels.
