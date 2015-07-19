@@ -361,8 +361,15 @@ do
 		end
 	end
 
-	function BCP:UNIT_SPELLCAST_SUCCEEDED(unit, _, _, _, spellId)
-		if spellId == 5171 or spellId == 52610 then -- Slice and Dice, Savage Roar
+	local ids = {
+		[52610] = true, -- Savage Roar, Druid
+		[5171] = true, -- Slice and Dice, Rogue
+		[73651] = true, -- Recuperate, Rogue
+		[121411] = true, -- Crimson Tempest, Rogue
+	}
+	function BCP:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
+		--print(spellId, spellName)
+		if ids[spellId] then
 			points = UnitAffectingCombat(unit) and -1 or 0 -- If we're in combat set to -1 because UNIT_COMBO_POINTS will fire and increment by 1, becoming 0
 			updatePoints()
 		end
