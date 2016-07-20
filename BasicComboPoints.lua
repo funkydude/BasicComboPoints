@@ -14,6 +14,9 @@ end
 
 local BCP = CreateFrame("Frame", name, UIParent)
 local media = LibStub("LibSharedMedia-3.0")
+local SPELL_POWER_COMBO_POINTS = 4 -- Global SPELL_POWER_COMBO_POINTS
+local COMBO_POINTS = "COMBO_POINTS"
+local UnitPower = UnitPower
 local font = nil
 local text
 local db
@@ -152,6 +155,27 @@ do
 								get = function() return db.colorfive.r, db.colorfive.g, db.colorfive.b end,
 								set = function(_, r, g, b) db.colorfive.r = r db.colorfive.g = g db.colorfive.b = b end,
 							},
+							colorsix = {
+								name = format(comboPointsString, 6),
+								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 6),
+								order = 8, type = "color", width = "full",
+								get = function() return db.colorsix.r, db.colorsix.g, db.colorsix.b end,
+								set = function(_, r, g, b) db.colorsix.r = r db.colorsix.g = g db.colorsix.b = b end,
+							},
+							colorseven = {
+								name = format(comboPointsString, 7),
+								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 7),
+								order = 9, type = "color", width = "full",
+								get = function() return db.colorseven.r, db.colorseven.g, db.colorseven.b end,
+								set = function(_, r, g, b) db.colorseven.r = r db.colorseven.g = g db.colorseven.b = b end,
+							},
+							coloreight = {
+								name = format(comboPointsString, 8),
+								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 8),
+								order = 10, type = "color", width = "full",
+								get = function() return db.coloreight.r, db.coloreight.g, db.coloreight.b end,
+								set = function(_, r, g, b) db.coloreight.r = r db.coloreight.g = g db.coloreight.b = b end,
+							},
 						},
 					},
 					size = {
@@ -206,6 +230,30 @@ do
 								get = function() return db.size.five end,
 								set = function(_, v) db.size.five = v end,
 							},
+							sizesix = {
+								name = format(comboPointsString, 6),
+								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 6),
+								order = 8, type = "range", width = "full",
+								min = 1, max = 48, step = 1,
+								get = function() return db.size.six end,
+								set = function(_, v) db.size.six = v end,
+							},
+							sizeseven = {
+								name = format(comboPointsString, 7),
+								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 7),
+								order = 9, type = "range", width = "full",
+								min = 1, max = 48, step = 1,
+								get = function() return db.size.seven end,
+								set = function(_, v) db.size.seven = v end,
+							},
+							sizeeight = {
+								name = format(comboPointsString, 8),
+								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 8),
+								order = 10, type = "range", width = "full",
+								min = 1, max = 48, step = 1,
+								get = function() return db.size.eight end,
+								set = function(_, v) db.size.eight = v end,
+							},
 						},
 					},
 				},
@@ -233,12 +281,15 @@ function BCP:ADDON_LOADED(msg)
 				shadow = true,
 				outline = "NONE",
 				font = "Friz Quadrata TT",
-				size = { one = 15, two = 25, three = 35, four = 45, five = 55 },
+				size = { one = 15, two = 25, three = 35, four = 45, five = 55, six = 55, seven = 55, eight = 55 },
 				colorone = { r = 1, g = 1, b = 1 },
 				colortwo = { r = 0, g = 1, b = 0 },
 				colorthree = { r = 1, g = 1, b = 0 },
 				colorfour = { r = 0, g = 0, b = 1 },
 				colorfive = { r = 1, g = 0, b = 0 },
+				colorsix = { r = 1, g = 0, b = 0 },
+				colorseven = { r = 1, g = 0, b = 0 },
+				coloreight = { r = 1, g = 0, b = 0 },
 			}
 		}
 		self.db = LibStub("AceDB-3.0"):New("BasicComboPointsDB", defaults)
@@ -290,9 +341,7 @@ function BCP:PLAYER_LOGIN()
 	end
 	text:SetFont(font, 15, db.outline)
 
-	self:RegisterUnitEvent("UNIT_COMBO_POINTS", "player")
-	self:RegisterUnitEvent("UNIT_SPELLCAST_SUCCEEDED", "player")
-	self:RegisterEvent("PLAYER_TARGET_CHANGED")
+	self:RegisterUnitEvent("UNIT_POWER", "player")
 
 	self.PLAYER_LOGIN = nil
 end
@@ -301,13 +350,10 @@ end
 --       Point Update       --
 ------------------------------
 
-do
-	local GetComboPoints = GetComboPoints
-	local UnitCanAttack = UnitCanAttack
-	local UnitAffectingCombat = UnitAffectingCombat
-	local points = 0
+function BCP:UNIT_POWER(unit, pType)
+	if pType == COMBO_POINTS then
+		local points = UnitPower(unit, SPELL_POWER_COMBO_POINTS)
 
-	local function updatePoints()
 		-- Set colors and sizes according to point count
 		if points < 1 then
 			text:SetText("")
@@ -328,51 +374,26 @@ do
 			text:SetFont(font, db.size.four, db.outline)
 			local color = db.colorfour
 			text:SetTextColor(color.r,color.g,color.b)
-		else
+		elseif points == 5 then
 			text:SetFont(font, db.size.five, db.outline)
 			local color = db.colorfive
+			text:SetTextColor(color.r,color.g,color.b)
+		elseif points == 6 then
+			text:SetFont(font, db.size.six, db.outline)
+			local color = db.colorsix
+			text:SetTextColor(color.r,color.g,color.b)
+		elseif points == 7 then
+			text:SetFont(font, db.size.seven, db.outline)
+			local color = db.colorseven
+			text:SetTextColor(color.r,color.g,color.b)
+		elseif points == 8 then
+			text:SetFont(font, db.size.eight, db.outline)
+			local color = db.coloreight
 			text:SetTextColor(color.r,color.g,color.b)
 		end
 
 		-- Display points
 		text:SetText(points)
-	end
-
-	function BCP:UNIT_COMBO_POINTS(unit)
-		local target = UnitCanAttack(unit, "target")
-		if target then
-			points = GetComboPoints(unit) -- Only get points if we have a target, it reports 0 with no target even if we have points
-		else
-			local combat = UnitAffectingCombat(unit)
-			if points > 0 and not combat then
-				points = points - 1 -- We don't have a target but we want to display the combo point decay over time, calculate it based on our last known points
-			elseif points < 5 and combat then
-				points = points + 1
-			end
-		end
-		updatePoints()
-	end
-
-	function BCP:PLAYER_TARGET_CHANGED()
-		local target = UnitCanAttack("player", "target")
-		if target then
-			points = GetComboPoints("player") -- Only get points if we have a target, it reports 0 with no target even if we have points
-			updatePoints()
-		end
-	end
-
-	local ids = {
-		[52610] = true, -- Savage Roar, Druid
-		[5171] = true, -- Slice and Dice, Rogue
-		[73651] = true, -- Recuperate, Rogue
-		[121411] = true, -- Crimson Tempest, Rogue
-	}
-	function BCP:UNIT_SPELLCAST_SUCCEEDED(unit, spellName, _, _, spellId)
-		--print(spellId, spellName)
-		if ids[spellId] then
-			points = UnitAffectingCombat(unit) and -1 or 0 -- If we're in combat set to -1 because UNIT_COMBO_POINTS will fire and increment by 1, becoming 0
-			updatePoints()
-		end
 	end
 end
 
