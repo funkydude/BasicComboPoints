@@ -12,6 +12,15 @@ do
 	elseif class == "PALADIN" then
 		EVENT = "HOLY_POWER"
 		POWER = 9 -- Global SPELL_POWER_HOLY_POWER
+	elseif class == "MAGE" then
+		EVENT = "ARCANE_CHARGES"
+		POWER = 16 -- Global SPELL_POWER_ARCANE_CHARGES
+	elseif class == "WARLOCK" then
+		EVENT = "SOUL_SHARDS"
+		POWER = 7 -- Global SPELL_POWER_SOUL_SHARDS
+	elseif class == "MONK" then
+		EVENT = "CHI"
+		POWER = 12 -- Global SPELL_POWER_CHI
 	else
 		DisableAddOn(name)
 		ChatFrame1:AddMessage("BasicComboPoints: ".. _G["ADDON_DISABLED"])
@@ -347,6 +356,7 @@ function BCP:PLAYER_LOGIN()
 	text:SetFont(font, 15, db.outline)
 
 	self:RegisterUnitEvent("UNIT_POWER", "player")
+	self:UNIT_POWER("player", EVENT)
 
 	self.PLAYER_LOGIN = nil
 end
