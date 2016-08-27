@@ -3,9 +3,16 @@
 ------------------------------
 
 local name, tbl = ...
+local POWER, EVENT
 do
 	local _, class = UnitClass("player")
-	if class ~= "ROGUE" and class ~= "DRUID" then
+	if class == "ROGUE" or class == "DRUID" then
+		EVENT = "COMBO_POINTS"
+		POWER = 4 -- Global SPELL_POWER_COMBO_POINTS
+	elseif class == "PALADIN" then
+		EVENT = "HOLY_POWER"
+		POWER = 9 -- Global SPELL_POWER_HOLY_POWER
+	else
 		DisableAddOn(name)
 		ChatFrame1:AddMessage("BasicComboPoints: ".. _G["ADDON_DISABLED"])
 		return
@@ -14,8 +21,6 @@ end
 
 local BCP = CreateFrame("Frame", name, UIParent)
 local media = LibStub("LibSharedMedia-3.0")
-local SPELL_POWER_COMBO_POINTS = 4 -- Global SPELL_POWER_COMBO_POINTS
-local COMBO_POINTS = "COMBO_POINTS"
 local UnitPower = UnitPower
 local font = nil
 local text
@@ -194,7 +199,7 @@ do
 								name = format(comboPointsString, 1),
 								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 1),
 								order = 3, type = "range", width = "full",
-								min = 1, max = 48, step = 1,
+								min = 1, max = 200, softMax = 72, step = 1,
 								get = function() return db.size.one end,
 								set = function(_, v) db.size.one = v end,
 							},
@@ -202,7 +207,7 @@ do
 								name = format(comboPointsString, 2),
 								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 2),
 								order = 4, type = "range", width = "full",
-								min = 1, max = 48, step = 1,
+								min = 1, max = 200, softMax = 72, step = 1,
 								get = function() return db.size.two end,
 								set = function(_, v) db.size.two = v end,
 							},
@@ -210,7 +215,7 @@ do
 								name = format(comboPointsString, 3),
 								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 3),
 								order = 5, type = "range", width = "full",
-								min = 1, max = 48, step = 1,
+								min = 1, max = 200, softMax = 72, step = 1,
 								get = function() return db.size.three end,
 								set = function(_, v) db.size.three = v end,
 							},
@@ -218,7 +223,7 @@ do
 								name = format(comboPointsString, 4),
 								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 4),
 								order = 6, type = "range", width = "full",
-								min = 1, max = 48, step = 1,
+								min = 1, max = 200, softMax = 72, step = 1,
 								get = function() return db.size.four end,
 								set = function(_, v) db.size.four = v end,
 							},
@@ -226,7 +231,7 @@ do
 								name = format(comboPointsString, 5),
 								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 5),
 								order = 7, type = "range", width = "full",
-								min = 1, max = 48, step = 1,
+								min = 1, max = 200, softMax = 72, step = 1,
 								get = function() return db.size.five end,
 								set = function(_, v) db.size.five = v end,
 							},
@@ -234,7 +239,7 @@ do
 								name = format(comboPointsString, 6),
 								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 6),
 								order = 8, type = "range", width = "full",
-								min = 1, max = 48, step = 1,
+								min = 1, max = 200, softMax = 72, step = 1,
 								get = function() return db.size.six end,
 								set = function(_, v) db.size.six = v end,
 							},
@@ -242,7 +247,7 @@ do
 								name = format(comboPointsString, 7),
 								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 7),
 								order = 9, type = "range", width = "full",
-								min = 1, max = 48, step = 1,
+								min = 1, max = 200, softMax = 72, step = 1,
 								get = function() return db.size.seven end,
 								set = function(_, v) db.size.seven = v end,
 							},
@@ -250,7 +255,7 @@ do
 								name = format(comboPointsString, 8),
 								desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 8),
 								order = 10, type = "range", width = "full",
-								min = 1, max = 48, step = 1,
+								min = 1, max = 200, softMax = 72, step = 1,
 								get = function() return db.size.eight end,
 								set = function(_, v) db.size.eight = v end,
 							},
@@ -351,8 +356,8 @@ end
 ------------------------------
 
 function BCP:UNIT_POWER(unit, pType)
-	if pType == COMBO_POINTS then
-		local points = UnitPower(unit, SPELL_POWER_COMBO_POINTS)
+	if pType == EVENT then
+		local points = UnitPower(unit, POWER)
 
 		-- Set colors and sizes according to point count
 		if points < 1 then
