@@ -1,9 +1,9 @@
 ## Interface: 70000
 ## Title: BasicComboPoints
 ## Notes: Numerical & customizable display of current combo points.
-## Notes-zhCN: Numerical & customizable display of current combo points.
+## Notes-zhCN: 当前连击点的数值和定制显示。
 ## Notes-zhTW: Numerical & customizable display of current combo points.
-## Notes-deDE: Numerical & customizable display of current combo points.
+## Notes-deDE: Numerische & anpassbare Anzeige deiner aktuellen Combopunkte.
 ## Notes-frFR: Affichage numérique & personnalisable de vos points de combo actuels.
 ## Notes-itIT: Numerical & customizable display of current combo points.
 ## Notes-koKR: Numerical & customizable display of current combo points.
