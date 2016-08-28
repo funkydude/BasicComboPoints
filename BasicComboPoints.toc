@@ -1,10 +1,23 @@
 ## Interface: 70000
 ## Title: BasicComboPoints
 ## Notes: Numerical & customizable display of current combo points.
+## Notes-zhCN: Numerical & customizable display of current combo points.
+## Notes-zhTW: Numerical & customizable display of current combo points.
+## Notes-deDE: Numerical & customizable display of current combo points.
 ## Notes-frFR: Affichage numérique & personnalisable de vos points de combo actuels.
+## Notes-itIT: Numerical & customizable display of current combo points.
+## Notes-koKR: Numerical & customizable display of current combo points.
+## Notes-ruRU: Numerical & customizable display of current combo points.
+## Notes-ptBR: Numerical & customizable display of current combo points.
+## Notes-esES: Numerical & customizable display of current combo points.
+## Notes-esMX: Numerical & customizable display of current combo points.
 ## Author: Funkydude
+## Version: @project-version@
+
 ## X-Category: Combat
-## X-License: All Rights Reserved
+## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
+## X-Curse-Project-ID: basic-combo-points
+## X-WoWI-ID: 9105
 ## SavedVariables: BasicComboPointsDB
 ## OptionalDeps: Ace3, LibSharedMedia-3.0
 ## X-Embeds: Ace3, LibSharedMedia-3.0
