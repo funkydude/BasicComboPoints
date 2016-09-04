@@ -28,12 +28,31 @@ do
 	end
 end
 
-local BCP = CreateFrame("Frame", name, UIParent)
 local media = LibStub("LibSharedMedia-3.0")
 local UnitPower = UnitPower
-local font = nil
-local text
-local db
+local db, font = nil, nil
+
+local BCP = CreateFrame("Frame", name, UIParent)
+BCP:SetClampedToScreen(true)
+BCP:SetPoint("CENTER", UIParent, "CENTER")
+BCP:SetBackdropColor(1,1,1,0)
+BCP:SetWidth(50)
+BCP:SetHeight(50)
+BCP:Show()
+BCP:RegisterForDrag("LeftButton")
+BCP:SetScript("OnDragStart", function(frame) frame:StartMoving() end)
+BCP:SetScript("OnDragStop", function(frame) frame:StopMovingOrSizing()
+	local s = frame:GetEffectiveScale()
+	db.x = frame:GetLeft() * s
+	db.y = frame:GetTop() * s
+end)
+
+local bg = BCP:CreateTexture()
+bg:SetAllPoints(BCP)
+bg:SetColorTexture(0, 1, 0, 0.3)
+bg:Hide()
+local text = BCP:CreateFontString()
+text:SetAllPoints(BCP)
 
 BCP:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
 BCP:RegisterEvent("PLAYER_LOGIN")
@@ -71,11 +90,11 @@ do
 								get = function() return db.lock end,
 								set = function(_, state) db.lock = state
 									if not state then
-										BCP:SetBackdropColor(1,1,1,1)
+										bg:Show()
 										state = true
 									else
-										BCP:SetBackdropColor(1,1,1,0)
-										state = nil
+										bg:Hide()
+										state = false
 									end
 									BCP:EnableMouse(state)
 									BCP:SetMovable(state)
@@ -319,23 +338,9 @@ end
 
 function BCP:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
-	self:SetBackdrop({bgFile = "Interface\\Tooltips\\UI-Tooltip-Background",})
-	self:SetFrameStrata("BACKGROUND")
-	self:SetClampedToScreen(true)
-	self:SetPoint("CENTER", UIParent, "CENTER")
-	self:SetBackdropColor(1,1,1,0)
-	self:SetWidth(50)
-	self:SetHeight(50)
-	self:Show()
-	self:RegisterForDrag("LeftButton")
-	self:SetScript("OnDragStart", function(frame) frame:StartMoving() end)
-	self:SetScript("OnDragStop", function(frame) frame:StopMovingOrSizing()
-		local s = self:GetEffectiveScale()
-		db.x = self:GetLeft() * s
-		db.y = self:GetTop() * s
-	end)
+
 	if not db.lock then
-		self:SetBackdropColor(1,1,1,1)
+		bg:Show()
 		self:EnableMouse(true)
 		self:SetMovable(true)
 	end
@@ -346,8 +351,6 @@ function BCP:PLAYER_LOGIN()
 		self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db.x / s, db.y / s)
 	end
 
-	text = self:CreateFontString("BasicComboPointsText", "OVERLAY")
-	text:SetPoint("CENTER", self, "CENTER")
 	font = media:Fetch("font", db.font)
 	if db.shadow then
 		text:SetShadowColor(0, 0, 0, 1)
