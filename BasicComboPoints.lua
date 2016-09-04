@@ -35,7 +35,6 @@ local db, font = nil, nil
 local BCP = CreateFrame("Frame", name, UIParent)
 BCP:SetClampedToScreen(true)
 BCP:SetPoint("CENTER", UIParent, "CENTER")
-BCP:SetBackdropColor(1,1,1,0)
 BCP:SetWidth(50)
 BCP:SetHeight(50)
 BCP:Show()
