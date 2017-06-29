@@ -8,19 +8,19 @@ do
 	local _, class = UnitClass("player")
 	if class == "ROGUE" or class == "DRUID" then
 		EVENT = "COMBO_POINTS"
-		POWER = 4 -- Global SPELL_POWER_COMBO_POINTS
+		POWER = 4 -- Global Enum.PowerType.ComboPoints
 	elseif class == "PALADIN" then
 		EVENT = "HOLY_POWER"
-		POWER = 9 -- Global SPELL_POWER_HOLY_POWER
+		POWER = 9 -- Global Enum.PowerType.HolyPower
 	elseif class == "MAGE" then
 		EVENT = "ARCANE_CHARGES"
-		POWER = 16 -- Global SPELL_POWER_ARCANE_CHARGES
+		POWER = 16 -- Global Enum.PowerType.ArcaneCharges
 	elseif class == "WARLOCK" then
 		EVENT = "SOUL_SHARDS"
-		POWER = 7 -- Global SPELL_POWER_SOUL_SHARDS
+		POWER = 7 -- Global Enum.PowerType.SoulShards
 	elseif class == "MONK" then
 		EVENT = "CHI"
-		POWER = 12 -- Global SPELL_POWER_CHI
+		POWER = 12 -- Global Enum.PowerType.Chi
 	else
 		DisableAddOn(name)
 		ChatFrame1:AddMessage("BasicComboPoints: ".. _G["ADDON_DISABLED"])
