@@ -357,8 +357,8 @@ function BCP:PLAYER_LOGIN()
 	end
 	text:SetFont(font, 15, db.outline)
 
-	self:RegisterUnitEvent("UNIT_POWER", "player")
-	self:UNIT_POWER("player", EVENT)
+	self:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
+	self:UNIT_POWER_UPDATE("player", EVENT)
 
 	self.PLAYER_LOGIN = nil
 end
@@ -367,7 +367,7 @@ end
 --       Point Update       --
 ------------------------------
 
-function BCP:UNIT_POWER(unit, pType)
+function BCP:UNIT_POWER_UPDATE(unit, pType)
 	if pType == EVENT then
 		local points = UnitPower(unit, POWER)
 
