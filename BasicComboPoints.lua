@@ -113,7 +113,7 @@ do
 								set = function(_, newfont)
 									db.font = media:List("font")[newfont]
 									font = media:Fetch("font", db.font)
-									BCP:UNIT_POWER("player", EVENT)
+									BCP:UNIT_POWER_UPDATE("player", EVENT)
 								end,
 							},
 							shadow = {
@@ -128,7 +128,7 @@ do
 										text:SetShadowColor(0, 0, 0, 0)
 										text:SetShadowOffset(0, 0)
 									end
-									BCP:UNIT_POWER("player", EVENT)
+									BCP:UNIT_POWER_UPDATE("player", EVENT)
 								end,
 							},
 							outline = {
@@ -136,7 +136,7 @@ do
 								order = 5, type = "select",
 								values = {NONE = _G["NONE"], OUTLINE = L["Outline"], THICKOUTLINE = L["Thick Outline"]},
 								get = function() return db.outline end,
-								set = function(_, value) db.outline = value BCP:UNIT_POWER("player", EVENT) end,
+								set = function(_, value) db.outline = value BCP:UNIT_POWER_UPDATE("player", EVENT) end,
 							},
 						},
 					},
