@@ -23,17 +23,5 @@
 ## X-Embeds: Ace3, LibSharedMedia-3.0
 
 embeds.xml
-
-Locales\enUS.lua
-Locales\ptBR.lua
-Locales\frFR.lua
-Locales\deDE.lua
-Locales\itIT.lua
-Locales\koKR.lua
-Locales\ruRU.lua
-Locales\zhCN.lua
-Locales\esES.lua
-Locales\zhTW.lua
-
-BasicComboPoints.lua
+modules.xml
 
