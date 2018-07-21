@@ -35,11 +35,14 @@ BCP:SetWidth(50)
 BCP:SetHeight(50)
 BCP:Show()
 BCP:RegisterForDrag("LeftButton")
-BCP:SetScript("OnDragStart", function(frame) frame:StartMoving() end)
-BCP:SetScript("OnDragStop", function(frame) frame:StopMovingOrSizing()
-	local s = frame:GetEffectiveScale()
-	frame.db.profile.x = frame:GetLeft() * s
-	frame.db.profile.y = frame:GetTop() * s
+BCP:SetScript("OnDragStart", function(f) f:StartMoving() end)
+BCP:SetScript("OnDragStop", function(f)
+	f:StopMovingOrSizing()
+	local a, _, b, c, d = f:GetPoint()
+	f.db.profile.position[1] = a
+	f.db.profile.position[2] = b
+	f.db.profile.position[3] = c
+	f.db.profile.position[4] = d
 end)
 
 local bg = BCP:CreateTexture()
@@ -73,21 +76,25 @@ function BCP:ADDON_LOADED(msg)
 		self:UnregisterEvent("ADDON_LOADED")
 		local defaults = {
 			profile = {
+				lock = false,
+				position = {"CENTER", "CENTER", 0, 0},
 				shadow = true,
 				outline = "NONE",
-				font = "Friz Quadrata TT",
-				size = { one = 15, two = 25, three = 35, four = 45, five = 55, six = 55, seven = 55, eight = 55 },
-				colorone = { r = 1, g = 1, b = 1 },
-				colortwo = { r = 0, g = 1, b = 0 },
-				colorthree = { r = 1, g = 1, b = 0 },
-				colorfour = { r = 0, g = 0, b = 1 },
-				colorfive = { r = 1, g = 0, b = 0 },
-				colorsix = { r = 1, g = 0, b = 0 },
-				colorseven = { r = 1, g = 0, b = 0 },
-				coloreight = { r = 1, g = 0, b = 0 },
+				font = media:GetDefault("font"),
+				size = {15, 25, 35, 45, 55, 55, 55, 55},
+				color = {
+					{ r = 1, g = 1, b = 1 },
+					{ r = 0, g = 1, b = 0 },
+					{ r = 1, g = 1, b = 0 },
+					{ r = 0, g = 0, b = 1 },
+					{ r = 1, g = 0, b = 0 },
+					{ r = 1, g = 0, b = 0 },
+					{ r = 1, g = 0, b = 0 },
+					{ r = 1, g = 0, b = 0 },
+				}
 			}
 		}
-		self.db = LibStub("AceDB-3.0"):New("BasicComboPointsDB", defaults)
+		self.db = LibStub("AceDB-3.0"):New("BCPSettings", defaults, true)
 
 		self.ADDON_LOADED = nil
 	end
@@ -106,11 +113,8 @@ function BCP:PLAYER_LOGIN()
 		self:SetMovable(true)
 	end
 
-	if self.db.profile.x then
-		local s = self:GetEffectiveScale()
-		self:ClearAllPoints()
-		self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", self.db.profile.x / s, self.db.profile.y / s)
-	end
+	self:ClearAllPoints()
+	self:SetPoint(self.db.profile.position[1], UIParent, self.db.profile.position[2], self.db.profile.position[3], self.db.profile.position[4])
 
 	if self.db.profile.shadow then
 		text:SetShadowColor(0, 0, 0, 1)
@@ -133,43 +137,15 @@ do
 	function BCP:UNIT_POWER_UPDATE(unit, pType)
 		if pType == EVENT then
 			local points = UnitPower(unit, POWER)
-			local db = self.db.profile
 
 			-- Set colors and sizes according to point count
 			if points < 1 then
 				text:SetText("")
 				return
-			elseif points == 1 then
-				text:SetFont(font, db.size.one, db.outline)
-				local color = db.colorone
-				text:SetTextColor(color.r,color.g,color.b)
-			elseif points == 2 then
-				text:SetFont(font, db.size.two, db.outline)
-				local color = db.colortwo
-				text:SetTextColor(color.r,color.g,color.b)
-			elseif points == 3 then
-				text:SetFont(font, db.size.three, db.outline)
-				local color = db.colorthree
-				text:SetTextColor(color.r,color.g,color.b)
-			elseif points == 4 then
-				text:SetFont(font, db.size.four, db.outline)
-				local color = db.colorfour
-				text:SetTextColor(color.r,color.g,color.b)
-			elseif points == 5 then
-				text:SetFont(font, db.size.five, db.outline)
-				local color = db.colorfive
-				text:SetTextColor(color.r,color.g,color.b)
-			elseif points == 6 then
-				text:SetFont(font, db.size.six, db.outline)
-				local color = db.colorsix
-				text:SetTextColor(color.r,color.g,color.b)
-			elseif points == 7 then
-				text:SetFont(font, db.size.seven, db.outline)
-				local color = db.colorseven
-				text:SetTextColor(color.r,color.g,color.b)
-			elseif points == 8 then
-				text:SetFont(font, db.size.eight, db.outline)
-				local color = db.coloreight
+			else
+				local db = self.db.profile
+				text:SetFont(media:Fetch("font", db.font), db.size[points], db.outline)
+				local color = db.color[points]
 				text:SetTextColor(color.r,color.g,color.b)
 			end
 
