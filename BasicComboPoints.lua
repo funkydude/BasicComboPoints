@@ -2,6 +2,7 @@
 --      Are you local?      --
 ------------------------------
 
+local POWER, EVENT
 do
 	local _, class = UnitClass("player")
 	if class == "ROGUE" or class == "DRUID" then
@@ -25,11 +26,7 @@ do
 end
 
 local name, tbl = ...
-local POWER, EVENT
-
 local media = LibStub("LibSharedMedia-3.0")
-local UnitPower = UnitPower
-local db, font = nil, nil
 
 local BCP = CreateFrame("Frame", name, UIParent)
 BCP:SetClampedToScreen(true)
@@ -41,8 +38,8 @@ BCP:RegisterForDrag("LeftButton")
 BCP:SetScript("OnDragStart", function(frame) frame:StartMoving() end)
 BCP:SetScript("OnDragStop", function(frame) frame:StopMovingOrSizing()
 	local s = frame:GetEffectiveScale()
-	db.x = frame:GetLeft() * s
-	db.y = frame:GetTop() * s
+	frame.db.profile.x = frame:GetLeft() * s
+	frame.db.profile.y = frame:GetTop() * s
 end)
 
 local bg = BCP:CreateTexture()
@@ -91,7 +88,6 @@ function BCP:ADDON_LOADED(msg)
 			}
 		}
 		self.db = LibStub("AceDB-3.0"):New("BasicComboPointsDB", defaults)
-		db = self.db.profile
 
 		self.ADDON_LOADED = nil
 	end
@@ -104,24 +100,23 @@ end
 function BCP:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 
-	if not db.lock then
+	if not self.db.profile.lock then
 		bg:Show()
 		self:EnableMouse(true)
 		self:SetMovable(true)
 	end
 
-	if db.x then
+	if self.db.profile.x then
 		local s = self:GetEffectiveScale()
 		self:ClearAllPoints()
-		self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", db.x / s, db.y / s)
+		self:SetPoint("TOPLEFT", UIParent, "BOTTOMLEFT", self.db.profile.x / s, self.db.profile.y / s)
 	end
 
-	font = media:Fetch("font", db.font)
-	if db.shadow then
+	if self.db.profile.shadow then
 		text:SetShadowColor(0, 0, 0, 1)
 		text:SetShadowOffset(1, -1)
 	end
-	text:SetFont(font, 15, db.outline)
+	text:SetFont(media:Fetch("font", self.db.profile.font), 15, self.db.profile.outline)
 
 	self:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
 	self:UNIT_POWER_UPDATE("player", EVENT)
@@ -133,50 +128,53 @@ end
 --       Point Update       --
 ------------------------------
 
-function BCP:UNIT_POWER_UPDATE(unit, pType)
-	if pType == EVENT then
-		local points = UnitPower(unit, POWER)
+do
+	local UnitPower = UnitPower
+	function BCP:UNIT_POWER_UPDATE(unit, pType)
+		if pType == EVENT then
+			local points = UnitPower(unit, POWER)
+			local db = self.db.profile
 
-		-- Set colors and sizes according to point count
-		if points < 1 then
-			text:SetText("")
-			return
-		elseif points == 1 then
-			text:SetFont(font, db.size.one, db.outline)
-			local color = db.colorone
-			text:SetTextColor(color.r,color.g,color.b)
-		elseif points == 2 then
-			text:SetFont(font, db.size.two, db.outline)
-			local color = db.colortwo
-			text:SetTextColor(color.r,color.g,color.b)
-		elseif points == 3 then
-			text:SetFont(font, db.size.three, db.outline)
-			local color = db.colorthree
-			text:SetTextColor(color.r,color.g,color.b)
-		elseif points == 4 then
-			text:SetFont(font, db.size.four, db.outline)
-			local color = db.colorfour
-			text:SetTextColor(color.r,color.g,color.b)
-		elseif points == 5 then
-			text:SetFont(font, db.size.five, db.outline)
-			local color = db.colorfive
-			text:SetTextColor(color.r,color.g,color.b)
-		elseif points == 6 then
-			text:SetFont(font, db.size.six, db.outline)
-			local color = db.colorsix
-			text:SetTextColor(color.r,color.g,color.b)
-		elseif points == 7 then
-			text:SetFont(font, db.size.seven, db.outline)
-			local color = db.colorseven
-			text:SetTextColor(color.r,color.g,color.b)
-		elseif points == 8 then
-			text:SetFont(font, db.size.eight, db.outline)
-			local color = db.coloreight
-			text:SetTextColor(color.r,color.g,color.b)
+			-- Set colors and sizes according to point count
+			if points < 1 then
+				text:SetText("")
+				return
+			elseif points == 1 then
+				text:SetFont(font, db.size.one, db.outline)
+				local color = db.colorone
+				text:SetTextColor(color.r,color.g,color.b)
+			elseif points == 2 then
+				text:SetFont(font, db.size.two, db.outline)
+				local color = db.colortwo
+				text:SetTextColor(color.r,color.g,color.b)
+			elseif points == 3 then
+				text:SetFont(font, db.size.three, db.outline)
+				local color = db.colorthree
+				text:SetTextColor(color.r,color.g,color.b)
+			elseif points == 4 then
+				text:SetFont(font, db.size.four, db.outline)
+				local color = db.colorfour
+				text:SetTextColor(color.r,color.g,color.b)
+			elseif points == 5 then
+				text:SetFont(font, db.size.five, db.outline)
+				local color = db.colorfive
+				text:SetTextColor(color.r,color.g,color.b)
+			elseif points == 6 then
+				text:SetFont(font, db.size.six, db.outline)
+				local color = db.colorsix
+				text:SetTextColor(color.r,color.g,color.b)
+			elseif points == 7 then
+				text:SetFont(font, db.size.seven, db.outline)
+				local color = db.colorseven
+				text:SetTextColor(color.r,color.g,color.b)
+			elseif points == 8 then
+				text:SetFont(font, db.size.eight, db.outline)
+				local color = db.coloreight
+				text:SetTextColor(color.r,color.g,color.b)
+			end
+
+			-- Display points
+			text:SetText(points)
 		end
-
-		-- Display points
-		text:SetText(points)
 	end
 end
-

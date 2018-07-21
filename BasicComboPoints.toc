@@ -13,14 +13,15 @@
 ## Notes-esMX: Numerical & customizable display of current combo points.
 ## Author: Funkydude
 ## Version: @project-version@
+## SavedVariables: BasicComboPointsDB
+## OptionalDeps: Ace3, LibSharedMedia-3.0
 
+## X-Embeds: Ace3, LibSharedMedia-3.0
 ## X-Category: Combat
+## X-Website: https://github.com/funkydude/BasicComboPoints
 ## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
 ## X-Curse-Project-ID: 13505
 ## X-WoWI-ID: 9105
-## SavedVariables: BasicComboPointsDB
-## OptionalDeps: Ace3, LibSharedMedia-3.0
-## X-Embeds: Ace3, LibSharedMedia-3.0
 
 embeds.xml
 modules.xml

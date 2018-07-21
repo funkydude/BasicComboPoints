@@ -13,15 +13,14 @@
 ## Notes-ptBR: BasicComboPoints Opções de Configuração.
 ## Notes-ruRU: BasicComboPoints параметры настроек.
 ## Version: @project-version@
+## LoadOnDemand: 1
+## Dependencies: BasicComboPoints
 
 ## X-Category: Combat
 ## X-Website: https://github.com/funkydude/BasicComboPoints
 ## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
 ## X-Curse-Project-ID: 13505
 ## X-WoWI-ID: 9105
-
-## LoadOnDemand: 1
-## Dependencies: BasicComboPoints
 
 embeds.xml
 locales.xml

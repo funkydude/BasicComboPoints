@@ -46,6 +46,7 @@ acOptions = {
 					name = L["Font"], desc = L["Apply the font you wish to use for your Combo Points."],
 					order = 4, type = "select", 
 					values = media:List("font"),
+					itemControl = "DDI-Font",
 					get = function()
 						for k, v in pairs(media:List("font")) do
 							if db.font == v then
@@ -55,7 +56,6 @@ acOptions = {
 					end,
 					set = function(_, newfont)
 						db.font = media:List("font")[newfont]
-						font = media:Fetch("font", db.font)
 						BCP:UNIT_POWER_UPDATE("player", EVENT)
 					end,
 				},
