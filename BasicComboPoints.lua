@@ -29,6 +29,7 @@ local name, tbl = ...
 local media = LibStub("LibSharedMedia-3.0")
 
 local BCP = CreateFrame("Frame", name, UIParent)
+BCP.EVENT = EVENT
 BCP:SetClampedToScreen(true)
 BCP:SetPoint("CENTER", UIParent, "CENTER")
 BCP:SetWidth(50)
@@ -46,10 +47,12 @@ BCP:SetScript("OnDragStop", function(f)
 end)
 
 local bg = BCP:CreateTexture()
+BCP.bg = bg
 bg:SetAllPoints(BCP)
 bg:SetColorTexture(0, 1, 0, 0.3)
 bg:Hide()
 local text = BCP:CreateFontString()
+BCP.text = text
 text:SetAllPoints(BCP)
 
 BCP:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
