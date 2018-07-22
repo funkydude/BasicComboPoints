@@ -55,6 +55,13 @@ local text = BCP:CreateFontString()
 BCP.text = text
 text:SetAllPoints(BCP)
 
+do
+	local header = BCP:CreateFontString(nil, "OVERLAY", "TextStatusBarText")
+	BCP.header = header
+	header:SetPoint("BOTTOM", BCP, "TOP")
+	header:SetText(name)
+end
+
 BCP:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
 BCP:RegisterEvent("PLAYER_LOGIN")
 BCP:RegisterEvent("ADDON_LOADED")

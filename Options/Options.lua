@@ -34,9 +34,11 @@ acOptions = {
 					set = function(_, state) BCP.db.profile.lock = state
 						if not state then
 							BCP.bg:Show()
+							BCP.header:Show()
 							state = true
 						else
 							BCP.bg:Hide()
+							BCP.header:Hide()
 							state = false
 						end
 						BCP:EnableMouse(state)
