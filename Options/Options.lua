@@ -31,18 +31,18 @@ acOptions = {
 					name = _G["LOCK"], desc = L["Lock the points frame in its current location."],
 					order = 3, type = "toggle",
 					get = function() return BCP.db.profile.lock end,
-					set = function(_, state) BCP.db.profile.lock = state
-						if not state then
+					set = function(_, value) BCP.db.profile.lock = value
+						if not value then
+							value = true
 							BCP.bg:Show()
 							BCP.header:Show()
-							state = true
 						else
+							value = false
 							BCP.bg:Hide()
 							BCP.header:Hide()
-							state = false
 						end
-						BCP:EnableMouse(state)
-						BCP:SetMovable(state)
+						BCP:EnableMouse(value)
+						BCP:SetMovable(value)
 					end,
 				},
 				font = {

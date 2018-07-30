@@ -34,6 +34,8 @@ BCP:SetClampedToScreen(true)
 BCP:SetPoint("CENTER", UIParent, "CENTER")
 BCP:SetWidth(50)
 BCP:SetHeight(50)
+BCP:SetMovable(true)
+BCP:EnableMouse(true)
 BCP:Show()
 BCP:RegisterForDrag("LeftButton")
 BCP:SetScript("OnDragStart", function(f) f:StartMoving() end)
@@ -50,7 +52,6 @@ local bg = BCP:CreateTexture()
 BCP.bg = bg
 bg:SetAllPoints(BCP)
 bg:SetColorTexture(0, 1, 0, 0.3)
-bg:Hide()
 local text = BCP:CreateFontString()
 BCP.text = text
 text:SetAllPoints(BCP)
@@ -58,7 +59,6 @@ local header = BCP:CreateFontString(nil, "OVERLAY", "TextStatusBarText")
 BCP.header = header
 header:SetPoint("BOTTOM", BCP, "TOP")
 header:SetText(name)
-header:Hide()
 
 BCP:SetScript("OnEvent", function(self, event, ...) self[event](self, ...) end)
 BCP:RegisterEvent("PLAYER_LOGIN")
@@ -68,11 +68,17 @@ BCP:RegisterEvent("ADDON_LOADED")
 --           Config         --
 ------------------------------
 
-SlashCmdList.BASICCOMBOPOINTS = function()
+local function openOpts()
 	EnableAddOn("BasicComboPoints_Options") -- Make sure it wasn't left disabled for whatever reason
 	LoadAddOn("BasicComboPoints_Options")
 	LibStub("AceConfigDialog-3.0"):Open(name)
 end
+BCP:SetScript("OnMouseUp", function(_, btn)
+	if btn == "RightButton" then
+		openOpts()
+	end
+end)
+SlashCmdList.BASICCOMBOPOINTS = openOpts
 SLASH_BASICCOMBOPOINTS1 = "/bcp"
 SLASH_BASICCOMBOPOINTS2 = "/basiccombopoints"
 
@@ -116,11 +122,11 @@ end
 function BCP:PLAYER_LOGIN()
 	self:UnregisterEvent("PLAYER_LOGIN")
 
-	if not self.db.profile.lock then
-		bg:Show()
-		header:Show()
-		self:EnableMouse(true)
-		self:SetMovable(true)
+	if self.db.profile.lock then
+		self:EnableMouse(false)
+		self:SetMovable(false)
+		bg:Hide()
+		header:Hide()
 	end
 
 	self:ClearAllPoints()
