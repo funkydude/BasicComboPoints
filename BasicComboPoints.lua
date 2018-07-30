@@ -69,6 +69,7 @@ BCP:RegisterEvent("ADDON_LOADED")
 ------------------------------
 
 SlashCmdList.BASICCOMBOPOINTS = function()
+	EnableAddOn("BasicComboPoints_Options") -- Make sure it wasn't left disabled for whatever reason
 	LoadAddOn("BasicComboPoints_Options")
 	LibStub("AceConfigDialog-3.0"):Open(name)
 end
