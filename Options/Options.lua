@@ -217,6 +217,7 @@ acOptions = {
 		profiles = adbo:GetOptionsTable(BCP.db),
 	},
 }
+acOptions.args.profiles.order = 4
 
 acr:RegisterOptionsTable(acOptions.name, acOptions, true)
 acd:SetDefaultSize(acOptions.name, 600, 600)
