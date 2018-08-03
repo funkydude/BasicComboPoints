@@ -139,6 +139,7 @@ function BCP:PLAYER_LOGIN()
 	text:SetFont(media:Fetch("font", self.db.profile.font), 15, self.db.profile.outline)
 
 	self:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
+	self:RegisterEvent("LOADING_SCREEN_DISABLED")
 	self:UNIT_POWER_UPDATE("player", EVENT)
 
 	self.PLAYER_LOGIN = nil
@@ -169,4 +170,9 @@ do
 			text:SetText(points)
 		end
 	end
+end
+
+function BCP:LOADING_SCREEN_DISABLED()
+	-- Compensate for decaying combo points during a loading screen not firing UNIT_POWER_UPDATE
+	self:UNIT_POWER_UPDATE("player", EVENT)
 end
