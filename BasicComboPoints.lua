@@ -68,19 +68,21 @@ BCP:RegisterEvent("ADDON_LOADED")
 --           Config         --
 ------------------------------
 
-local function openOpts()
-	EnableAddOn("BasicComboPoints_Options") -- Make sure it wasn't left disabled for whatever reason
-	LoadAddOn("BasicComboPoints_Options")
-	LibStub("AceConfigDialog-3.0"):Open(name)
-end
-BCP:SetScript("OnMouseUp", function(_, btn)
-	if btn == "RightButton" then
-		openOpts()
+do
+	local function openOpts()
+		EnableAddOn("BasicComboPoints_Options") -- Make sure it wasn't left disabled for whatever reason
+		LoadAddOn("BasicComboPoints_Options")
+		LibStub("AceConfigDialog-3.0"):Open(name)
 	end
-end)
-SlashCmdList.BASICCOMBOPOINTS = openOpts
-SLASH_BASICCOMBOPOINTS1 = "/bcp"
-SLASH_BASICCOMBOPOINTS2 = "/basiccombopoints"
+	BCP:SetScript("OnMouseUp", function(_, btn)
+		if btn == "RightButton" then
+			openOpts()
+		end
+	end)
+	SlashCmdList.BASICCOMBOPOINTS = openOpts
+	SLASH_BASICCOMBOPOINTS1 = "/bcp"
+	SLASH_BASICCOMBOPOINTS2 = "/basiccombopoints"
+end
 
 ------------------------------
 --      Initialization      --

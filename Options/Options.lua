@@ -11,7 +11,7 @@ do
 end
 
 local comboPointsString = COMBAT_TEXT_COMBO_POINTS:gsub("[<>]", "")
-acOptions = {
+local acOptions = {
 	name = "BasicComboPoints",
 	childGroups = "tab", type = "group",
 	args = {
