@@ -13,7 +13,7 @@ end
 local comboPointsString = COMBAT_TEXT_COMBO_POINTS:gsub("[<>]", "")
 local acOptions = {
 	name = "BasicComboPoints",
-	childGroups = "tab", type = "group",
+	type = "group", childGroups = "tab",
 	args = {
 		main = {
 			name = _G["MISCELLANEOUS"],

@@ -25,7 +25,7 @@ do
 	end
 end
 
-local name, tbl = ...
+local name = ...
 local media = LibStub("LibSharedMedia-3.0")
 
 local BCP = CreateFrame("Frame", name, UIParent)
