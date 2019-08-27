@@ -1,3 +1,9 @@
+
+if WOW_PROJECT_ID ~= WOW_PROJECT_CLASSIC then
+	print("|cFF33FF99BasicComboPoints|r: You're trying to run the Classic version of BasicComboPoints on a live server.")
+	return
+end
+
 ------------------------------
 --      Are you local?      --
 ------------------------------
@@ -7,7 +13,7 @@ do
 	local _, class = UnitClass("player")
 	if class == "ROGUE" or class == "DRUID" then
 		EVENT = "COMBO_POINTS"
-		POWER = 4 -- Global Enum.PowerType.ComboPoints
+		POWER = 14 -- Global Enum.PowerType.ComboPoints
 	elseif class == "PALADIN" then
 		EVENT = "HOLY_POWER"
 		POWER = 9 -- Global Enum.PowerType.HolyPower
