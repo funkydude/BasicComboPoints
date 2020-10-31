@@ -12,7 +12,3 @@ externals:
 
 move-folders:
     BasicComboPoints/Options: BasicComboPoints_Options
-
-ignore:
-  - .travis.yml
-  - README.md
