@@ -10,4 +10,13 @@ ignore = {
 globals = {
 	"UnitClass",
 	"CreateFrame",
+	"LibStub",
+	"UIParent",
+	"EnableAddOn",
+	"LoadAddOn",
+	"UnitPower",
+	"GetLocale",
+	"BasicComboPoints",
+	"COMBAT_TEXT_COMBO_POINTS",
+	"string",
 }

@@ -4,6 +4,7 @@ local acd = LibStub("AceConfigDialog-3.0")
 local media = LibStub("LibSharedMedia-3.0")
 local adbo = LibStub("AceDBOptions-3.0")
 local BCP = BasicComboPoints
+local format = string.format
 local L
 do
 	local _, mod = ...
