@@ -8,14 +8,20 @@ ignore = {
 	"11/SLASH_BASICCOMBOPOINTS[12]", -- slash handlers
 }
 globals = {
-	"UnitClass",
-	"CreateFrame",
-	"LibStub",
-	"UIParent",
-	"EnableAddOn",
-	"LoadAddOn",
-	"UnitPower",
-	"GetLocale",
-	"BasicComboPoints",
+	-- Lua
 	"string",
+
+	-- Addon
+	"BasicComboPoints",
+	"LibStub",
+
+	-- WoW
+	"CreateFrame",
+	"EnableAddOn",
+	"GetLocale",
+	"LoadAddOn",
+	"SlashCmdList",
+	"UIParent",
+	"UnitClass",
+	"UnitPower",
 }
