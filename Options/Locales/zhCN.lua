@@ -13,3 +13,5 @@ L["Font"] = "字体"
 L["Lock the points frame in its current location."] = "锁定框架在当前位置。"
 L["Outline"] = "轮廓"
 L["Thick Outline"] = "厚轮廓"
+
+L.COMBAT_TEXT_COMBO_POINTS = "%d连击"

@@ -22,3 +22,4 @@ local L = tbl.L
 --L["Apply a outline to your text."] = "Apply a outline to your text."
 --L["Thick Outline"] = "Thick Outline"
 
+L.COMBAT_TEXT_COMBO_POINTS = "%d |4прием:приема:приемов; в серии"

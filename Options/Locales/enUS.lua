@@ -21,3 +21,5 @@ L["Apply a shadow to your text."] = "Apply a shadow to your text."
 L["Outline"] = "Outline"
 L["Apply a outline to your text."] = "Apply a outline to your text."
 L["Thick Outline"] = "Thick Outline"
+
+L.COMBAT_TEXT_COMBO_POINTS = "<d Combo |4Point:Points;"

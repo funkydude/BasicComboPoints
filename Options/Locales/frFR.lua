@@ -10,3 +10,5 @@ L["Apply the %s you wish to use for Combo Point %d."] = "Détermine la %s à uti
 L["BasicComboPoints is a numerical display of your current combo points, with extras such as a font and color chooser."] = "BasicComboPoints est un affichage numérique de vos points de combo actuels, avec quelques extras comme la sélection de la police et de la couleur."
 L["Font"] = "Police d'écriture"
 L["Lock the points frame in its current location."] = "Verrouille le cadre des points à sa position actuelle."
+
+L.COMBAT_TEXT_COMBO_POINTS = "%d |4point:points; de combo"

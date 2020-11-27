@@ -11,7 +11,6 @@ do
 	L = mod.L
 end
 
-local comboPointsString = COMBAT_TEXT_COMBO_POINTS:gsub("[<>]", "")
 local acOptions = {
 	name = "BasicComboPoints",
 	type = "group", childGroups = "tab",
@@ -107,42 +106,42 @@ local acOptions = {
 					order = 2, type = "header",
 				},
 				[1] = {
-					name = format(comboPointsString, 1),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 1),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 1),
 					order = 3, type = "color", width = "full",
 				},
 				[2] = {
-					name = format(comboPointsString, 2),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 2),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 2),
 					order = 4, type = "color", width = "full",
 				},
 				[3] = {
-					name = format(comboPointsString, 3),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 3),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 3),
 					order = 5, type = "color", width = "full",
 				},
 				[4] = {
-					name = format(comboPointsString, 4),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 4),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 4),
 					order = 6, type = "color", width = "full",
 				},
 				[5] = {
-					name = format(comboPointsString, 5),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 5),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 5),
 					order = 7, type = "color", width = "full",
 				},
 				[6] = {
-					name = format(comboPointsString, 6),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 6),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 6),
 					order = 8, type = "color", width = "full",
 				},
 				[7] = {
-					name = format(comboPointsString, 7),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 7),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 7),
 					order = 9, type = "color", width = "full",
 				},
 				[8] = {
-					name = format(comboPointsString, 8),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 8),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["COLOR"], 8),
 					order = 10, type = "color", width = "full",
 				},
@@ -166,49 +165,49 @@ local acOptions = {
 					order = 2, type = "header",
 				},
 				[1] = {
-					name = format(comboPointsString, 1),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 1),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 1),
 					order = 3, type = "range", width = "full",
 					min = 1, max = 200, softMax = 100, step = 1,
 				},
 				[2] = {
-					name = format(comboPointsString, 2),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 2),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 2),
 					order = 4, type = "range", width = "full",
 					min = 1, max = 200, softMax = 100, step = 1,
 				},
 				[3] = {
-					name = format(comboPointsString, 3),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 3),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 3),
 					order = 5, type = "range", width = "full",
 					min = 1, max = 200, softMax = 100, step = 1,
 				},
 				[4] = {
-					name = format(comboPointsString, 4),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 4),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 4),
 					order = 6, type = "range", width = "full",
 					min = 1, max = 200, softMax = 100, step = 1,
 				},
 				[5] = {
-					name = format(comboPointsString, 5),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 5),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 5),
 					order = 7, type = "range", width = "full",
 					min = 1, max = 200, softMax = 100, step = 1,
 				},
 				[6] = {
-					name = format(comboPointsString, 6),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 6),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 6),
 					order = 8, type = "range", width = "full",
 					min = 1, max = 200, softMax = 100, step = 1,
 				},
 				[7] = {
-					name = format(comboPointsString, 7),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 7),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 7),
 					order = 9, type = "range", width = "full",
 					min = 1, max = 200, softMax = 100, step = 1,
 				},
 				[8] = {
-					name = format(comboPointsString, 8),
+					name = format(L.COMBAT_TEXT_COMBO_POINTS, 8),
 					desc = format(L["Apply the %s you wish to use for Combo Point %d."], _G["FONT_SIZE"], 8),
 					order = 10, type = "range", width = "full",
 					min = 1, max = 200, softMax = 100, step = 1,

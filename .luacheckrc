@@ -17,6 +17,5 @@ globals = {
 	"UnitPower",
 	"GetLocale",
 	"BasicComboPoints",
-	"COMBAT_TEXT_COMBO_POINTS",
 	"string",
 }

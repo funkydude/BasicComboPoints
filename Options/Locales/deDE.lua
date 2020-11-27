@@ -13,3 +13,5 @@ L["Font"] = "Schrift"
 L["Lock the points frame in its current location."] = "Verankere den Punkte-Rahmen an seiner aktuellen Position."
 L["Outline"] = "Umriss"
 L["Thick Outline"] = "Dicker Umriss"
+
+L.COMBAT_TEXT_COMBO_POINTS = "%d |4Combopunkt:Combopunkte;"
