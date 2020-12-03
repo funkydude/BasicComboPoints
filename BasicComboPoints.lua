@@ -112,6 +112,12 @@ function BCP:ADDON_LOADED(msg)
 			}
 		}
 		self.db = LibStub("AceDB-3.0"):New("BCPSettings", defaults, true)
+		do
+			local rl = function() ReloadUI() end
+			self.db.RegisterCallback(self, "OnProfileChanged", rl)
+			self.db.RegisterCallback(self, "OnProfileCopied", rl)
+			self.db.RegisterCallback(self, "OnProfileReset", rl)
+		end
 
 		self.ADDON_LOADED = nil
 	end

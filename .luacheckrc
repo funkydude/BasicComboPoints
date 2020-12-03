@@ -8,9 +8,6 @@ ignore = {
 	"11/SLASH_BASICCOMBOPOINTS[12]", -- slash handlers
 }
 globals = {
-	-- Lua
-	"string",
-
 	-- Addon
 	"BasicComboPoints",
 	"LibStub",
