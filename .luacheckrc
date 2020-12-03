@@ -17,6 +17,7 @@ globals = {
 	"EnableAddOn",
 	"GetLocale",
 	"LoadAddOn",
+	"ReloadUI",
 	"SlashCmdList",
 	"UIParent",
 	"UnitClass",
