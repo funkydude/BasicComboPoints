@@ -5,7 +5,7 @@ exclude_files = {
 	"**/Libs",
 }
 ignore = {
-	"11/SLASH_BASICCOMBOPOINTS[12]", -- slash handlers
+	"111/SLASH_BASICCOMBOPOINTS[12]", -- slash handlers
 }
 globals = {
 	-- Addon
