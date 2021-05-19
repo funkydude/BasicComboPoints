@@ -24,5 +24,6 @@ globals = {
 	"UnitPower",
 
 	-- Classic
+	"Enum",
 	"GetComboPoints",
 }
