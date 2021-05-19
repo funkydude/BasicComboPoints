@@ -7,7 +7,7 @@ do
 	local _, class = UnitClass("player")
 	if class == "ROGUE" or class == "DRUID" then
 		EVENT = "COMBO_POINTS"
-		POWER = 4 -- Global Enum.PowerType.ComboPoints
+		POWER = Enum.PowerType.ComboPoints -- XXX 4 on retail, 14 on BCC/Classic
 	elseif class == "PALADIN" then
 		EVENT = "HOLY_POWER"
 		POWER = 9 -- Global Enum.PowerType.HolyPower
@@ -157,30 +157,55 @@ end
 --       Point Update       --
 ------------------------------
 
-do
-	local UnitPower = UnitPower
-	function BCP:UNIT_POWER_UPDATE(unit, pType)
-		if pType == EVENT then
-			local points = UnitPower(unit, POWER)
-
-			-- Set colors and sizes according to point count
-			if points < 1 then
-				text:SetText("")
-				return
-			else
-				local db = self.db.profile
-				text:SetFont(media:Fetch("font", db.font), db.size[points], db.outline)
-				local color = db.color[points]
-				text:SetTextColor(color.r,color.g,color.b)
-			end
-
-			-- Display points
-			text:SetText(points)
-		end
-	end
-end
-
 function BCP:LOADING_SCREEN_DISABLED()
 	-- Compensate for decaying combo points during a loading screen not firing UNIT_POWER_UPDATE
 	self:UNIT_POWER_UPDATE("player", EVENT)
+end
+
+do
+	if Enum.PowerType.ComboPoints == 4 then
+		local UnitPower = UnitPower
+		function BCP:UNIT_POWER_UPDATE(unit, pType)
+			if pType == EVENT then
+				local points = UnitPower(unit, POWER)
+
+				-- Set colors and sizes according to point count
+				if points < 1 then
+					text:SetText("")
+					return
+				else
+					local db = self.db.profile
+					text:SetFont(media:Fetch("font", db.font), db.size[points], db.outline)
+					local color = db.color[points]
+					text:SetTextColor(color.r,color.g,color.b)
+				end
+
+				-- Display points
+				text:SetText(points)
+			end
+		end
+	else
+		local GetComboPoints = GetComboPoints
+		function BCP:UNIT_POWER_UPDATE(unit, pType)
+			if pType == EVENT then
+				local points = GetComboPoints(unit, "target")
+
+				-- Set colors and sizes according to point count
+				if points < 1 then
+					text:SetText("")
+					return
+				else
+					local db = self.db.profile
+					text:SetFont(media:Fetch("font", db.font), db.size[points], db.outline)
+					local color = db.color[points]
+					text:SetTextColor(color.r,color.g,color.b)
+				end
+
+				-- Display points
+				text:SetText(points)
+			end
+		end
+		BCP.PLAYER_TARGET_CHANGED = BCP.LOADING_SCREEN_DISABLED
+		BCP:RegisterUnitEvent("PLAYER_TARGET_CHANGED")
+	end
 end

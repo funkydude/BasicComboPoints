@@ -22,4 +22,7 @@ globals = {
 	"UIParent",
 	"UnitClass",
 	"UnitPower",
+
+	-- Classic
+	"GetComboPoints",
 }
