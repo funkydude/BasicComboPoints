@@ -2,24 +2,12 @@
 --      Are you local?      --
 ------------------------------
 
-local POWER, EVENT
+local EVENT
 do
 	local _, class = UnitClass("player")
 	if class == "ROGUE" or class == "DRUID" then
 		EVENT = "COMBO_POINTS"
-		POWER = 4 -- Global Enum.PowerType.ComboPoints // 4 on retail, 14 on BCC/Classic
-	elseif class == "PALADIN" then
-		EVENT = "HOLY_POWER"
-		POWER = 9 -- Global Enum.PowerType.HolyPower
-	elseif class == "MAGE" then
-		EVENT = "ARCANE_CHARGES"
-		POWER = 16 -- Global Enum.PowerType.ArcaneCharges
-	elseif class == "WARLOCK" then
-		EVENT = "SOUL_SHARDS"
-		POWER = 7 -- Global Enum.PowerType.SoulShards
-	elseif class == "MONK" then
-		EVENT = "CHI"
-		POWER = 12 -- Global Enum.PowerType.Chi
+		--POWER = 14 -- Global Enum.PowerType.ComboPoints // 4 on retail, 14 on BCC/Classic
 	else
 		return
 	end
@@ -163,10 +151,10 @@ function BCP:LOADING_SCREEN_DISABLED()
 end
 
 do
-	local UnitPower = UnitPower
+	local GetComboPoints = GetComboPoints
 	function BCP:UNIT_POWER_UPDATE(unit, pType)
 		if pType == EVENT then
-			local points = UnitPower(unit, POWER)
+			local points = GetComboPoints(unit, "target")
 			-- Set colors and sizes according to point count
 			if points < 1 then
 				text:SetText("")
@@ -181,4 +169,6 @@ do
 			text:SetText(points)
 		end
 	end
+	BCP.PLAYER_TARGET_CHANGED = BCP.LOADING_SCREEN_DISABLED
+	BCP:RegisterUnitEvent("PLAYER_TARGET_CHANGED")
 end

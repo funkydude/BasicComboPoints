@@ -24,5 +24,6 @@
 ## X-WoWI-ID: 9105
 
 embeds.xml
+BasicComboPoints.lua
 modules.xml
 
