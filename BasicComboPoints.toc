@@ -1,4 +1,4 @@
-## Interface: 90200
+## Interface: 90205
 ## Title: BasicComboPoints
 ## Notes: Numerical & customizable display of current combo points.
 ## Notes-zhCN: 当前连击点的数值和定制显示。
