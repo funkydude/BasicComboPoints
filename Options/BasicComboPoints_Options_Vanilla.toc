@@ -21,6 +21,7 @@
 ## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
 ## X-Curse-Project-ID: 13505
 ## X-WoWI-ID: 9105
+## X-Wago-ID: ME6gpRK1
 
 embeds.xml
 locales.xml
