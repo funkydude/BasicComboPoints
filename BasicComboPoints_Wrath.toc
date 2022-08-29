@@ -1,0 +1,29 @@
+## Interface: 30400
+## Title: BasicComboPoints
+## Notes: Numerical & customizable display of current combo points.
+## Notes-zhCN: 当前连击点的数值和定制显示。
+## Notes-zhTW: Numerical & customizable display of current combo points.
+## Notes-deDE: Numerische & anpassbare Anzeige deiner aktuellen Combopunkte.
+## Notes-frFR: Affichage numérique & personnalisable de vos points de combo actuels.
+## Notes-itIT: Numerical & customizable display of current combo points.
+## Notes-koKR: Numerical & customizable display of current combo points.
+## Notes-ruRU: Numerical & customizable display of current combo points.
+## Notes-ptBR: Numerical & customizable display of current combo points.
+## Notes-esES: Numerical & customizable display of current combo points.
+## Notes-esMX: Numerical & customizable display of current combo points.
+## Author: Funkydude
+## Version: @project-version@
+## SavedVariables: BCPSettings
+## OptionalDeps: Ace3, LibSharedMedia-3.0, LibDDI-1.0
+
+## X-Embeds: Ace3, LibSharedMedia-3.0, LibDDI-1.0
+## X-Category: Combat
+## X-Website: https://github.com/funkydude/BasicComboPoints
+## X-License: All Rights Reserved: You are free to fork and modify on GitHub, please ask us about anything else.
+## X-Curse-Project-ID: 13505
+## X-WoWI-ID: 9105
+
+embeds.xml
+BasicComboPoints_Classic.lua
+modules.xml
+
