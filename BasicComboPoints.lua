@@ -20,6 +20,9 @@ do
 	elseif class == "MONK" then
 		EVENT = "CHI"
 		POWER = 12 -- Global Enum.PowerType.Chi
+	elseif class == "EVOKER" then
+		EVENT = "ESSENCE"
+		POWER = 19 -- Global Enum.PowerType.Essence
 	else
 		return
 	end
