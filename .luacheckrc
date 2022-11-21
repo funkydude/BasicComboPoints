@@ -6,8 +6,9 @@ exclude_files = {
 }
 ignore = {
 	"111/SLASH_BASICCOMBOPOINTS[12]", -- slash handlers
+	"112/SlashCmdList", -- SlashCmdList.BASICCOMBOPOINTS
 }
-globals = {
+read_globals = {
 	-- Addon
 	"BasicComboPoints",
 	"LibStub",
@@ -18,7 +19,6 @@ globals = {
 	"GetLocale",
 	"LoadAddOn",
 	"ReloadUI",
-	"SlashCmdList",
 	"UIParent",
 	"UnitClass",
 	"UnitPower",
