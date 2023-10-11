@@ -1,4 +1,4 @@
-## Interface: 30402
+## Interface: 30403
 ## Title: BasicComboPoints_Options
 ## Author: Funkydude
 ## Notes: BasicComboPoints Configuration Options.
