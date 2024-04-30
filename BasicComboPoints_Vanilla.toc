@@ -1,4 +1,4 @@
-## Interface: 11501
+## Interface: 11502
 ## Title: BasicComboPoints
 ## Notes: Numerical & customizable display of current combo points.
 ## Notes-zhCN: 当前连击点的数值和定制显示。
