@@ -25,6 +25,6 @@
 ## X-Wago-ID: ME6gpRK1
 
 embeds.xml
-BasicComboPoints_Classic.lua
+BasicComboPoints_Cata.lua
 modules.xml
 
