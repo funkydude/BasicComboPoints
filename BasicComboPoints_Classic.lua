@@ -58,6 +58,8 @@ BCP:RegisterEvent("ADDON_LOADED")
 
 do
 	local function openOpts()
+		local EnableAddOn = C_AddOns.EnableAddOn or EnableAddOn
+		local LoadAddOn = C_AddOns.LoadAddOn or LoadAddOn
 		EnableAddOn("BasicComboPoints_Options") -- Make sure it wasn't left disabled for whatever reason
 		LoadAddOn("BasicComboPoints_Options")
 		LibStub("AceConfigDialog-3.0"):Open(name)
