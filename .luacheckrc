@@ -14,6 +14,7 @@ read_globals = {
 	"LibStub",
 
 	-- WoW
+	"C_AddOns",
 	"CreateFrame",
 	"EnableAddOn",
 	"GetLocale",
