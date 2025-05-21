@@ -1,4 +1,4 @@
-## Interface: 110105, 110107, 110100
+## Interface: 50500
 ## Title: BasicComboPoints
 ## Notes: Numerical & customizable display of current combo points.
 ## Notes-zhCN: 当前连击点的数值和定制显示。
@@ -25,6 +25,6 @@
 ## X-Wago-ID: ME6gpRK1
 
 embeds.xml
-BasicComboPoints.lua
+BasicComboPoints_Mists.lua
 modules.xml
 

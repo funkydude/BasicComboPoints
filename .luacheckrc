@@ -15,6 +15,7 @@ read_globals = {
 
 	-- WoW
 	"C_AddOns",
+	"C_UnitAuras", -- MoP Mage
 	"CreateFrame",
 	"EnableAddOn",
 	"GetLocale",

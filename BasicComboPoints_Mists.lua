@@ -151,9 +151,14 @@ function BCP:PLAYER_LOGIN()
 	end
 	text:SetFont(media:Fetch("font", self.db.profile.font), 15, self.db.profile.outline)
 
-	self:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
-	self:RegisterEvent("LOADING_SCREEN_DISABLED")
-	self:UNIT_POWER_UPDATE("player", EVENT)
+	if EVENT == "ARCANE_CHARGES" then
+		self:RegisterUnitEvent("UNIT_AURA", "player")
+		self:UNIT_AURA("player")
+	else
+		self:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
+		self:RegisterEvent("LOADING_SCREEN_DISABLED")
+		self:UNIT_POWER_UPDATE("player", EVENT)
+	end
 
 	self.PLAYER_LOGIN = nil
 end
@@ -164,30 +169,80 @@ end
 
 function BCP:LOADING_SCREEN_DISABLED()
 	-- Compensate for decaying combo points during a loading screen not firing UNIT_POWER_UPDATE
-	self:UNIT_POWER_UPDATE("player", EVENT)
+	if EVENT == "ARCANE_CHARGES" then
+		self:UNIT_AURA("player")
+	else
+		self:UNIT_POWER_UPDATE("player", EVENT)
+	end
 end
 
-if EVENT == "COMBO_POINTS" then
-	local GetComboPoints = GetComboPoints
-	function BCP:UNIT_POWER_UPDATE(unit, pType)
-		if pType == EVENT then
-			local points = GetComboPoints(unit, "target")
-			-- Set colors and sizes according to point count
-			if points < 1 then
-				text:SetText("")
-				return
-			else
-				local db = self.db.profile
-				text:SetFont(media:Fetch("font", db.font), db.size[points], db.outline)
-				local color = db.color[points]
-				text:SetTextColor(color.r,color.g,color.b)
+if EVENT == "ARCANE_CHARGES" then
+	local GetAuraDataByAuraInstanceID = C_UnitAuras.GetAuraDataByAuraInstanceID
+	local GetAuraDataByIndex = C_UnitAuras.GetAuraDataByIndex
+	local auraInstanceID = nil
+	function BCP:UNIT_AURA(unit, updateInfo)
+		if not updateInfo or updateInfo.isFullUpdate then
+			for i = 1, 50 do
+				local auraTbl = GetAuraDataByIndex(unit, i, "HARMFUL")
+				if not auraTbl then
+					auraInstanceID = nil
+					text:SetText("")
+					return
+				else
+					if auraTbl.spellId == 36032 then
+						auraInstanceID = auraTbl.auraInstanceID
+						local stacks = auraTbl.applications
+						local db = self.db.profile
+						text:SetFont(media:Fetch("font", db.font), db.size[stacks], db.outline)
+						local color = db.color[stacks]
+						text:SetTextColor(color.r,color.g,color.b)
+						text:SetText(stacks)
+						return
+					end
+				end
 			end
-			-- Display points
-			text:SetText(points)
+		else
+			if updateInfo.addedAuras then
+				for i = 1, #updateInfo.addedAuras do
+					local auraTbl = updateInfo.addedAuras[i]
+
+					if auraTbl.spellId == 36032 then
+						auraInstanceID = auraTbl.auraInstanceID
+						local stacks = auraTbl.applications
+						local db = self.db.profile
+						text:SetFont(media:Fetch("font", db.font), db.size[stacks], db.outline)
+						local color = db.color[stacks]
+						text:SetTextColor(color.r,color.g,color.b)
+						text:SetText(stacks)
+						return
+					end
+				end
+			end
+			if updateInfo.removedAuraInstanceIDs then
+				for i = 1, #updateInfo.removedAuraInstanceIDs do
+					if updateInfo.removedAuraInstanceIDs[i] == auraInstanceID then
+						auraInstanceID = nil
+						text:SetText("")
+						return
+					end
+				end
+			end
+			if updateInfo.updatedAuraInstanceIDs then
+				for i = 1, #updateInfo.updatedAuraInstanceIDs do
+					if updateInfo.updatedAuraInstanceIDs[i] == auraInstanceID then
+						local auraTbl = GetAuraDataByAuraInstanceID(unit, auraInstanceID)
+						local stacks = auraTbl.applications
+						local db = self.db.profile
+						text:SetFont(media:Fetch("font", db.font), db.size[stacks], db.outline)
+						local color = db.color[stacks]
+						text:SetTextColor(color.r,color.g,color.b)
+						text:SetText(stacks)
+						return
+					end
+				end
+			end
 		end
 	end
-	BCP.PLAYER_TARGET_CHANGED = BCP.LOADING_SCREEN_DISABLED
-	BCP:RegisterEvent("PLAYER_TARGET_CHANGED")
 else
 	local UnitPower = UnitPower
 	function BCP:UNIT_POWER_UPDATE(unit, pType)
