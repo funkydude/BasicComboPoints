@@ -11,7 +11,7 @@
 ## Notes-ptBR: Numerical & customizable display of current combo points.
 ## Notes-esES: Numerical & customizable display of current combo points.
 ## Notes-esMX: Numerical & customizable display of current combo points.
-## Author: Funkydude
+## Author: Funkeh
 ## Version: @project-version@
 ## SavedVariables: BCPSettings
 ## OptionalDeps: Ace3, LibSharedMedia-3.0, LibDDI-1.0
