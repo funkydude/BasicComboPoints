@@ -11,4 +11,5 @@ A numerical display of current combo points. Features:
 * /basiccombopoints
 
 ## Download
-<https://www.curseforge.com/wow/addons/basic-combo-points>
+* <https://www.curseforge.com/wow/addons/basic-combo-points>
+* <https://addons.wago.io/addons/basiccombopoints>
