@@ -81,7 +81,7 @@ local options = function()
 					outline = {
 						name = L["Outline"], desc = L["Apply a outline to your text."],
 						order = 6, type = "select", width = 2,
-						values = {NONE = _G["NONE"], OUTLINE = L["Outline"], THICKOUTLINE = L["Thick Outline"]},
+						values = {[""] = _G["NONE"], OUTLINE = L["Outline"], THICKOUTLINE = L["Thick Outline"]},
 						get = function() return BCP.db.profile.outline end,
 						set = function(_, value) BCP.db.profile.outline = value BCP:UNIT_POWER_UPDATE("player", BCP.EVENT) end,
 					},

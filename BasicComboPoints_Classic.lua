@@ -86,7 +86,7 @@ function BCP:ADDON_LOADED(msg)
 				lock = false,
 				position = {"CENTER", "CENTER", 0, 0},
 				shadow = true,
-				outline = "NONE",
+				outline = "",
 				font = media:GetDefault("font"),
 				size = {15, 25, 35, 45, 55, 55, 55, 55},
 				color = {
