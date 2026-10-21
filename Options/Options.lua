@@ -224,4 +224,3 @@ end
 
 acr:RegisterOptionsTable("BasicComboPoints", options, true)
 acd:SetDefaultSize("BasicComboPoints", 600, 600)
-
