@@ -3,33 +3,37 @@
 ------------------------------
 
 local POWER, EVENT
+local name, addonTbl = ...
 do
 	local _, class = UnitClass("player")
 	if class == "ROGUE" or class == "DRUID" then
 		EVENT = "COMBO_POINTS"
 		POWER = 4 -- Global Enum.PowerType.ComboPoints // 4 on retail, 14 on BCC/Classic
-	elseif class == "PALADIN" then
-		EVENT = "HOLY_POWER"
-		POWER = 9 -- Global Enum.PowerType.HolyPower
-	elseif class == "MAGE" then
-		EVENT = "ARCANE_CHARGES"
-		POWER = 16 -- Global Enum.PowerType.ArcaneCharges
-	elseif class == "WARLOCK" then
-		EVENT = "SOUL_SHARDS"
-		POWER = 7 -- Global Enum.PowerType.SoulShards
-	elseif class == "MONK" then
-		EVENT = "CHI"
-		POWER = 12 -- Global Enum.PowerType.Chi
-	elseif class == "EVOKER" then
-		EVENT = "ESSENCE"
-		POWER = 19 -- Global Enum.PowerType.Essence
+	elseif addonTbl.retail then
+		if class == "PALADIN" then
+			EVENT = "HOLY_POWER"
+			POWER = 9 -- Global Enum.PowerType.HolyPower
+		elseif class == "MAGE" then
+			EVENT = "ARCANE_CHARGES"
+			POWER = 16 -- Global Enum.PowerType.ArcaneCharges
+		elseif class == "WARLOCK" then
+			EVENT = "SOUL_SHARDS"
+			POWER = 7 -- Global Enum.PowerType.SoulShards
+		elseif class == "MONK" then
+			EVENT = "CHI"
+			POWER = 12 -- Global Enum.PowerType.Chi
+		elseif class == "EVOKER" then
+			EVENT = "ESSENCE"
+			POWER = 19 -- Global Enum.PowerType.Essence
+		else
+			return
+		end
 	else
 		return
 	end
 end
 
-local name = ...
-local media = LibStub("LibSharedMedia-3.0")
+local LibSharedMedia = LibStub("LibSharedMedia-3.0")
 
 local BCP = CreateFrame("Frame", name, UIParent)
 BCP.EVENT = EVENT
@@ -73,10 +77,8 @@ BCP:RegisterEvent("ADDON_LOADED")
 
 do
 	local function openOpts()
-		local EnableAddOn = C_AddOns.EnableAddOn or EnableAddOn
-		local LoadAddOn = C_AddOns.LoadAddOn or LoadAddOn
-		EnableAddOn("BasicComboPoints_Options") -- Make sure it wasn't left disabled for whatever reason
-		LoadAddOn("BasicComboPoints_Options")
+		C_AddOns.EnableAddOn("BasicComboPoints_Options") -- Make sure it wasn't left disabled for whatever reason
+		C_AddOns.LoadAddOn("BasicComboPoints_Options")
 		LibStub("AceConfigDialog-3.0"):Open(name)
 	end
 	BCP:SetScript("OnMouseUp", function(_, btn)
@@ -102,7 +104,7 @@ function BCP:ADDON_LOADED(msg)
 				position = {"CENTER", "CENTER", 0, 0},
 				shadow = true,
 				outline = "",
-				font = media:GetDefault("font"),
+				font = LibSharedMedia:GetDefault("font"),
 				size = {15, 25, 35, 45, 55, 55, 55, 55},
 				color = {
 					{ r = 1, g = 1, b = 1 },
@@ -118,7 +120,7 @@ function BCP:ADDON_LOADED(msg)
 		}
 		self.db = LibStub("AceDB-3.0"):New("BCPSettings", defaults, true)
 		do
-			local rl = function() ReloadUI() end
+			local rl = function() C_UI.Reload() end
 			self.db.RegisterCallback(self, "OnProfileChanged", rl)
 			self.db.RegisterCallback(self, "OnProfileCopied", rl)
 			self.db.RegisterCallback(self, "OnProfileReset", rl)
@@ -149,11 +151,14 @@ function BCP:PLAYER_LOGIN()
 		text:SetShadowColor(0, 0, 0, 1)
 		text:SetShadowOffset(1, -1)
 	end
-	text:SetFont(media:Fetch("font", self.db.profile.font), 15, self.db.profile.outline)
+	text:SetFont(LibSharedMedia:Fetch("font", self.db.profile.font), 15, self.db.profile.outline)
 
 	self:RegisterUnitEvent("UNIT_POWER_UPDATE", "player")
 	self:RegisterEvent("LOADING_SCREEN_DISABLED")
 	self:UNIT_POWER_UPDATE("player", EVENT)
+	if not addonTbl.retail then
+		self:RegisterEvent("PLAYER_TARGET_CHANGED")
+	end
 
 	self.PLAYER_LOGIN = nil
 end
@@ -167,7 +172,27 @@ function BCP:LOADING_SCREEN_DISABLED()
 	self:UNIT_POWER_UPDATE("player", EVENT)
 end
 
-do
+if not addonTbl.retail then
+	BCP.PLAYER_TARGET_CHANGED = BCP.LOADING_SCREEN_DISABLED
+	local GetComboPoints = GetComboPoints
+	function BCP:UNIT_POWER_UPDATE(unit, pType)
+		if pType == EVENT then
+			local points = GetComboPoints(unit, "target")
+			-- Set colors and sizes according to point count
+			if points < 1 then
+				text:SetText("")
+				return
+			else
+				local db = self.db.profile
+				text:SetFont(LibSharedMedia:Fetch("font", db.font), db.size[points], db.outline)
+				local color = db.color[points]
+				text:SetTextColor(color.r,color.g,color.b)
+			end
+			-- Display points
+			text:SetText(points)
+		end
+	end
+else
 	local UnitPower = UnitPower
 	function BCP:UNIT_POWER_UPDATE(unit, pType)
 		if pType == EVENT then
@@ -178,7 +203,7 @@ do
 				return
 			else
 				local db = self.db.profile
-				text:SetFont(media:Fetch("font", db.font), db.size[points], db.outline)
+				text:SetFont(LibSharedMedia:Fetch("font", db.font), db.size[points], db.outline)
 				local color = db.color[points]
 				text:SetTextColor(color.r,color.g,color.b)
 			end

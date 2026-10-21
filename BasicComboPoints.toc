@@ -25,8 +25,8 @@
 ## X-Wago-ID: ME6gpRK1
 
 embeds.xml
-BasicComboPoints.lua [AllowLoadGameType mainline]
-BasicComboPoints_Classic.lua [AllowLoadGameType vanilla, tbc, wrath]
+Init_[Game].lua [AllowLoadGameType standard]
+BasicComboPoints.lua [AllowLoadGameType mainline, vanilla, tbc, wrath]
 BasicComboPoints_Cata.lua [AllowLoadGameType cata]
 BasicComboPoints_Mists.lua [AllowLoadGameType mists]
 modules.xml

@@ -15,17 +15,14 @@ read_globals = {
 
 	-- WoW
 	"C_AddOns",
-	"C_UnitAuras", -- MoP Mage
+	"C_UI",
 	"CreateFrame",
-	"EnableAddOn",
 	"GetLocale",
-	"LoadAddOn",
-	"ReloadUI",
 	"UIParent",
 	"UnitClass",
 	"UnitPower",
 
 	-- Classic
-	"Enum",
+	"C_UnitAuras", -- MoP Mage
 	"GetComboPoints",
 }
