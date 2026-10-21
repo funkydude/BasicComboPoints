@@ -1,4 +1,4 @@
-## Interface: 120100, 120105, 120107
+## Interface: 11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120100, 120105, 120107
 ## Title: BasicComboPoints
 ## Notes: Numerical & customizable display of current combo points.
 ## Notes-zhCN: 当前连击点的数值和定制显示。
@@ -30,4 +30,3 @@ BasicComboPoints_Classic.lua [AllowLoadGameType vanilla, tbc, wrath]
 BasicComboPoints_Cata.lua [AllowLoadGameType cata]
 BasicComboPoints_Mists.lua [AllowLoadGameType mists]
 modules.xml
-

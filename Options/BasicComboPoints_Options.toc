@@ -1,4 +1,4 @@
-## Interface: 11508, 11509, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120100, 120105, 120107
+## Interface: 11508, 11509, 16001, 20505, 20506, 30405, 38002, 40402, 50503, 50504, 120100, 120105, 120107
 ## Title: BasicComboPoints_Options
 ## Author: Funkeh
 ## Notes: BasicComboPoints Configuration Options.
@@ -26,4 +26,3 @@
 embeds.xml
 locales.xml
 Options.lua
-
